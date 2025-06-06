@@ -1,0 +1,263 @@
+[
+    {
+        "id": 1,
+        "name": "Bamenda Regional Hospital",
+        "image": "",
+        "rating": 4.5,
+        "reviews": 128,
+        "about": "The Bamenda Regional Hospital is the largest public health facility in the Northwest Region. It provides comprehensive medical services including emergency care, surgery, maternity, pediatrics, and specialized clinics. The hospital has modern equipment and trained staff to handle various medical conditions.",
+        "services": [
+            "Emergency Care",
+            "General Surgery",
+            "Cardiology",
+            "Pediatrics",
+            "Maternity",
+            "Radiology",
+            "Laboratory Services",
+            "Pharmacy",
+            "Neurology",
+            "Dental Care"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. John Mbah",
+                "specialty": "General Surgery"
+            },
+            {
+                "name": "Dr. Alice Nfor",
+                "specialty": "Pediatrics"
+            },
+            {
+                "name": "Dr. Samuel Tumi",
+                "specialty": "Cardiology"
+            },
+            {
+                "name": "Dr. Grace Fon",
+                "specialty": "Obstetrics & Gynecology"
+            }
+        ],
+        "contact": {
+            "phone": "+237 6 75 43 21 09",
+            "email": "info@bamendaregionalhospital.cm",
+            "address": "Hospital Road, Nkwen, Bamenda, Northwest Region, Cameroon",
+            "hours": "Open 24/7",
+            "location": {
+                "lat": 5.9636,
+                "lng": 10.1594
+            }
+        }
+    },
+    {
+        "id": 2,
+        "name": "St. Mary Soledad Catholic Hospital",
+        "image": "",
+        "rating": 4.7,
+        "reviews": 95,
+        "about": "St. Mary Soledad Catholic Hospital is a faith-based health institution known for its excellent maternity and pediatric care. The hospital combines modern medicine with compassionate care in a serene environment. It has specialized units for chronic disease management and community health programs.",
+        "services": [
+            "Maternity Services",
+            "Neonatal Care",
+            "Pediatrics",
+            "General Medicine",
+            "Pharmacy",
+            "Laboratory",
+            "HIV/AIDS Care",
+            "Nutrition Services",
+            "Vaccination"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Francis Ndi",
+                "specialty": "Pediatrics"
+            },
+            {
+                "name": "Dr. Rose Mbuh",
+                "specialty": "Obstetrics"
+            },
+            {
+                "name": "Dr. Patrick Ngwa",
+                "specialty": "General Medicine"
+            }
+        ],
+        "contact": {
+            "phone": "+237 6 74 56 78 90",
+            "email": "stmarys.hospital@yahoo.com",
+            "address": "Mankon, Bamenda, Northwest Region, Cameroon",
+            "hours": "Mon-Sat: 7:30AM-8PM, Sun: 9AM-4PM",
+            "location": {
+                "lat": 5.9431,
+                "lng": 10.1453
+            }
+        }
+    },
+    {
+        "id": 3,
+        "name": "Banso Baptist Hospital",
+        "image": "",
+        "rating": 4.6,
+        "reviews": 112,
+        "about": "Banso Baptist Hospital is a mission hospital providing quality healthcare services to the Northwest Region since 1965. It has a strong focus on community health, training programs, and specialized services including eye care and orthopedic surgery. The hospital is known for its affordable services and rural outreach programs.",
+        "services": [
+            "Ophthalmology",
+            "Orthopedics",
+            "Community Health",
+            "General Surgery",
+            "Internal Medicine",
+            "Dental Care",
+            "Laboratory",
+            "Pharmacy",
+            "Physical Therapy"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Mark Nji",
+                "specialty": "Ophthalmology"
+            },
+            {
+                "name": "Dr. Sarah Bih",
+                "specialty": "Orthopedics"
+            },
+            {
+                "name": "Dr. James Kongnyuy",
+                "specialty": "Internal Medicine"
+            }
+        ],
+        "contact": {
+            "phone": "+237 6 77 89 01 23",
+            "email": "bbhadmin@bansobaptist.org",
+            "address": "Kumbo Road, Bamenda, Northwest Region, Cameroon",
+            "hours": "Open 24/7",
+            "location": {
+                "lat": 6.0400,
+                "lng": 10.1489
+            }
+        }
+    },
+    {
+        "id": 4,
+        "name": "Acha Memorial Hospital",
+        "image": "",
+        "rating": 4.3,
+        "reviews": 76,
+        "about": "Acha Memorial Hospital is a private health facility offering specialized medical services with modern diagnostic equipment. The hospital has a reputation for excellent patient care and short waiting times. It features a well-equipped emergency unit and comfortable private wards.",
+        "services": [
+            "Cardiology",
+            "Neurology",
+            "Endocrinology",
+            "General Medicine",
+            "Ultrasound",
+            "X-ray",
+            "Laboratory",
+            "Pharmacy",
+            "Emergency Care"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Felix Acha",
+                "specialty": "Cardiology"
+            },
+            {
+                "name": "Dr. Linda Nkwenti",
+                "specialty": "Neurology"
+            },
+            {
+                "name": "Dr. Eric Mbaku",
+                "specialty": "Endocrinology"
+            }
+        ],
+        "contact": {
+            "phone": "+237 6 70 12 34 56",
+            "email": "contact@achahospital.com",
+            "address": "Commercial Avenue, Bamenda, Northwest Region, Cameroon",
+            "hours": "Mon-Fri: 8AM-9PM, Sat: 8AM-6PM",
+            "location": {
+                "lat": 5.9567,
+                "lng": 10.1518
+            }
+        }
+    },
+    {
+        "id": 5,
+        "name": "Bamenda General Hospital",
+        "image": "",
+        "rating": 4.2,
+        "reviews": 64,
+        "about": "Bamenda General Hospital is a secondary level health facility providing both inpatient and outpatient services. The hospital has specialized units for diabetes care, hypertension management, and infectious diseases. It serves as a referral center for smaller clinics in the region.",
+        "services": [
+            "General Medicine",
+            "Surgery",
+            "Pediatrics",
+            "Maternity",
+            "Dermatology",
+            "ENT",
+            "Laboratory",
+            "Pharmacy",
+            "Radiology"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Henry Ndifor",
+                "specialty": "General Medicine"
+            },
+            {
+                "name": "Dr. Martha Tambe",
+                "specialty": "Dermatology"
+            },
+            {
+                "name": "Dr. Paul Nkeng",
+                "specialty": "ENT"
+            }
+        ],
+        "contact": {
+            "phone": "+237 6 71 45 67 89",
+            "email": "bamendagh@yahoo.fr",
+            "address": "Up Station, Bamenda, Northwest Region, Cameroon",
+            "hours": "Open 24/7",
+            "location": {
+                "lat": 5.9489,
+                "lng": 10.1632
+            }
+        }
+    },
+    {
+        "id": 6,
+        "name": "Shisong Cardiac Center",
+        "image": "",
+        "rating": 4.8,
+        "reviews": 53,
+        "about": "Shisong Cardiac Center is the first and only cardiac surgery center in Central Africa. Located near Bamenda, it provides specialized cardiac care including open-heart surgeries, echocardiography, and cardiac rehabilitation. The center attracts patients from across Africa and has a partnership with Italian cardiac specialists.",
+        "services": [
+            "Cardiac Surgery",
+            "Echocardiography",
+            "Cardiac Rehabilitation",
+            "Pediatric Cardiology",
+            "Cardiac Catheterization",
+            "Pacemaker Implantation",
+            "Cardiology Consultations"
+        ],
+        "doctors": [
+            {
+                "name": "Dr. Piergiorgio Settepani",
+                "specialty": "Cardiac Surgery"
+            },
+            {
+                "name": "Dr. Agnes Nkembi",
+                "specialty": "Cardiology"
+            },
+            {
+                "name": "Dr. Charles Mveh",
+                "specialty": "Pediatric Cardiology"
+            }
+        ],
+        "contact": {
+            "phone": "+237 6 77 89 45 12",
+            "email": "cardiaccenter@shisong.org",
+            "address": "Shisong, Kumbo (Near Bamenda), Northwest Region, Cameroon",
+            "hours": "Mon-Fri: 8AM-5PM",
+            "location": {
+                "lat": 6.2139,
+                "lng": 10.6589
+            }
+        }
+    }
+]

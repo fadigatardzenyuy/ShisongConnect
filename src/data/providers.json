@@ -1,0 +1,52 @@
+[
+    {
+        "id": 1,
+        "name": "MediCare Excellence Center",
+        "verified": true,
+        "premium": true,
+        "location": "Downtown Douala",
+        "distance": "1.2 km",
+        "rating": 4.9,
+        "reviews": 1247,
+        "time": "15 min",
+        "specialties": [
+            "Cardiology",
+            "Neurology",
+            "+1"
+        ],
+        "available": true
+    },
+    {
+        "id": 2,
+        "name": "HealthFirst Medical Clinic",
+        "verified": true,
+        "premium": false,
+        "location": "Bonanjo District",
+        "distance": "2.3 km",
+        "rating": 4.7,
+        "reviews": 892,
+        "time": "25 min",
+        "specialties": [
+            "General Medicine",
+            "Pediatrics"
+        ],
+        "available": true
+    },
+    {
+        "id": 3,
+        "name": "Central Hospital Yaoundé",
+        "verified": true,
+        "premium": true,
+        "location": "Centre-ville, Yaoundé",
+        "distance": "0.8 km",
+        "rating": 4.8,
+        "reviews": 2156,
+        "time": "20 min",
+        "specialties": [
+            "Emergency",
+            "Surgery",
+            "+1"
+        ],
+        "available": true
+    }
+]

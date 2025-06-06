@@ -95,7 +95,7 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="p-6 max-w-[1400px] mx-auto">
-        <Header />
+        
         
         <div className={`welcome-banner transition-all duration-300 mt-8 mb-8 ${highlightedElement ? (highlightedElement === '.welcome-banner' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
           <WelcomeBanner />

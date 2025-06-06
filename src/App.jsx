@@ -1,15 +1,15 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ResponsiveRouter from './components/ResponsiveRouter';
 import ToastProvider from './components/ui/ToastProvider';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <ToastProvider>
         <ResponsiveRouter />
       </ToastProvider>
-    </BrowserRouter>
+    </Router>
   );
 }
 
