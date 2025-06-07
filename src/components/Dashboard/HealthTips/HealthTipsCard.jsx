@@ -62,75 +62,93 @@ const HealthTipsCard = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 h-full flex flex-col">
-      <div className="flex justify-between items-center mb-4">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full flex flex-col"
+    >
+      <div className="flex justify-between items-center mb-5">
         <div className="flex items-center">
-          <FiBell className="text-blue-500 mr-2" size={18} />
-          <h3 className="text-base font-medium text-gray-600">Hospital Updates</h3>
+          <div className="p-2 bg-green-50 rounded-lg mr-2">
+            <FiBell className="text-green-600" size={20} />
+          </div>
+          <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">Hospital Updates</h3>
         </div>
-        <button className="bg-blue-500 text-white text-xs font-medium flex items-center px-3 py-1.5 rounded-md hover:bg-blue-600 transition-colors">
-          View All <FiChevronRight className="ml-1" size={12} />
-        </button>
+        <motion.button 
+          whileHover={{ scale: 1.04 }}
+          className="bg-green-500 text-white text-sm sm:text-base font-medium flex items-center px-4 py-2 rounded-xl shadow-sm hover:bg-green-600 transition-colors"
+        >
+          View All <FiChevronRight className="ml-1" size={14} />
+        </motion.button>
       </div>
 
       <div className="flex-1">
-        <div className="space-y-3">
-          {currentUpdates.map((update) => (
+        <div className="space-y-4">
+          {currentUpdates.map((update, idx) => (
             <motion.div
               key={update.id}
-              whileHover={{ scale: 1.01 }}
-              className="border border-gray-100 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer bg-white hover:border-blue-100"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              whileHover={{ scale: 1.015, boxShadow: "0 4px 16px rgba(16, 185, 129, 0.08)" }}
+              className="border border-gray-100 rounded-xl p-4 hover:shadow-md transition-all cursor-pointer bg-white hover:border-green-200"
             >
               <div className="flex justify-between items-start mb-2">
-                <span className="text-xs font-medium px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
+                <span className="text-sm sm:text-base font-medium px-2 py-1 bg-green-50 text-green-600 rounded-full">
                   {update.category}
                 </span>
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-xs sm:text-sm text-gray-500">
                   <FiClock className="mr-1" size={12} />
                   {update.date}
                 </div>
               </div>
-              <h4 className="font-medium text-gray-600 mb-1 text-sm line-clamp-1">{update.title}</h4>
-              <p className="text-xs text-gray-500 line-clamp-2">{update.description}</p>
-              <button className="mt-2 bg-blue-500 text-white text-xs font-medium flex items-center px-3 py-1.5 rounded-md hover:bg-blue-600 transition-colors">
+              <h4 className="font-semibold text-gray-800 mb-1 text-base sm:text-lg line-clamp-1">{update.title}</h4>
+              <p className="text-sm text-gray-500 line-clamp-2">{update.description}</p>
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                className="mt-3 bg-green-100 text-green-700 text-sm font-medium flex items-center px-3 py-1.5 rounded-lg hover:bg-green-200 transition-colors"
+              >
                 Read more <FiChevronRight className="ml-1" size={12} />
-              </button>
+              </motion.button>
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
-        <button
+      <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+        <motion.button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
-          className={`flex items-center text-xs font-medium px-3 py-1.5 rounded-md ${
+          whileTap={{ scale: 0.97 }}
+          className={`flex items-center text-sm font-medium px-4 py-2 rounded-xl transition-colors shadow-sm ${
             currentPage === 1 
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-              : 'bg-blue-500 text-white hover:bg-blue-600'
+              : 'bg-green-500 text-white hover:bg-green-600'
           }`}
         >
           <FiChevronLeft className="mr-1" size={14} />
           Previous
-        </button>
-        <span className="text-xs text-gray-500">
+        </motion.button>
+        <span className="text-sm text-gray-500">
           Page {currentPage} of {totalPages}
         </span>
-        <button
+        <motion.button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className={`flex items-center text-xs font-medium px-3 py-1.5 rounded-md ${
+          whileTap={{ scale: 0.97 }}
+          className={`flex items-center text-sm font-medium px-4 py-2 rounded-xl transition-colors shadow-sm ${
             currentPage === totalPages 
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
-              : 'bg-blue-500 text-white hover:bg-blue-600'
+              : 'bg-green-500 text-white hover:bg-green-600'
           }`}
         >
           Next
           <FiChevronRight className="ml-1" size={14} />
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

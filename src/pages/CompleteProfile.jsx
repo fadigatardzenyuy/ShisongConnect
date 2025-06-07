@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiUser, FiMail, FiPhone, FiMapPin, FiCalendar, FiHeart, FiAlertCircle, FiCreditCard, FiGlobe, FiCamera, FiCheck } from 'react-icons/fi';
 
 const CompleteProfile = () => {
   const navigate = useNavigate();
@@ -36,11 +37,11 @@ const CompleteProfile = () => {
   const [previewImage, setPreviewImage] = useState(null);
 
   const steps = [
-    { id: 1, title: 'Personal Info', icon: '👤', description: 'Tell us about yourself' },
-    { id: 2, title: 'Health Info', icon: '❤️', description: 'Share your health details' },
-    { id: 3, title: 'Emergency Contact', icon: '🚨', description: 'Who should we call?' },
-    { id: 4, title: 'Insurance', icon: '📋', description: 'Insurance information' },
-    { id: 5, title: 'Preferences', icon: '✨', description: 'Your preferences' }
+    { id: 1, title: 'Personal Info', icon: <FiUser />, description: 'Tell us about yourself' },
+    { id: 2, title: 'Health Info', icon: <FiHeart />, description: 'Share your health details' },
+    { id: 3, title: 'Emergency Contact', icon: <FiAlertCircle />, description: 'Who should we call?' },
+    { id: 4, title: 'Insurance', icon: <FiCreditCard />, description: 'Insurance information' },
+    { id: 5, title: 'Preferences', icon: <FiGlobe />, description: 'Your preferences' }
   ];
 
   const handleChange = (e) => {
@@ -75,7 +76,7 @@ const CompleteProfile = () => {
       }));
     }
 
-    // Update progress (simplified example)
+    // Update progress
     const filledFields = Object.values(formData).filter(val => val !== '').length;
     const totalFields = Object.keys(formData).length;
     setProgress((filledFields / totalFields) * 100);
@@ -87,7 +88,6 @@ const CompleteProfile = () => {
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Profile data:', formData);
       navigate('/dashboard');
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -98,7 +98,6 @@ const CompleteProfile = () => {
   const nextStep = () => {
     setCurrentStep(prev => {
       const next = Math.min(prev + 1, steps.length);
-      // Animate progress bar
       setProgress((next / steps.length) * 100);
       return next;
     });
@@ -114,24 +113,45 @@ const CompleteProfile = () => {
 
   const renderStepIndicator = () => {
     return (
-      <div className="flex flex-col items-center mb-8">
-        <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-          <div 
-            className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500 ease-out" 
-            style={{ width: `${progress}%` }}
-          ></div>
+      <div className="space-y-4">
+        {steps.map((step, index) => (
+          <motion.div
+            key={step.id}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className={`flex items-center p-4 rounded-lg cursor-pointer transition-all duration-200 ${
+              currentStep === step.id
+                ? 'bg-green-50 border-l-4 border-green-500'
+                : currentStep > step.id
+                ? 'bg-green-50/50'
+                : 'hover:bg-gray-50'
+            }`}
+            onClick={() => currentStep > step.id && setCurrentStep(step.id)}
+          >
+            <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+              currentStep > step.id 
+                ? 'bg-green-500 text-white' 
+                : currentStep === step.id 
+                ? 'bg-green-500 text-white ring-4 ring-green-100' 
+                : 'bg-gray-100 text-gray-500'
+            }`}>
+              {currentStep > step.id ? (
+                <FiCheck className="w-5 h-5" />
+              ) : (
+                step.icon
+              )}
         </div>
-        <div className="text-center">
-          <span className="text-sm font-medium text-indigo-600">
-            Step {currentStep} of {steps.length}
-          </span>
-          <h3 className="text-xl font-bold text-gray-900 mt-1">
-            {steps[currentStep - 1].title}
-          </h3>
-          <p className="text-sm text-gray-500 mt-1">
-            {steps[currentStep - 1].description}
-          </p>
+            <div className="ml-4">
+              <p className={`text-sm font-medium ${
+                currentStep >= step.id ? 'text-green-700' : 'text-gray-500'
+              }`}>
+                {step.title}
+              </p>
+              <p className="text-xs text-gray-500">{step.description}</p>
         </div>
+          </motion.div>
+        ))}
       </div>
     );
   };
@@ -150,46 +170,53 @@ const CompleteProfile = () => {
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="fullName" className="block text-sm font-medium text-green-700">
                   Full Name <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="fullName"
                   id="fullName"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="John Doe"
                 />
+                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="dateOfBirth" className="block text-sm font-medium text-green-700">
                   Date of Birth <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="date"
                   name="dateOfBirth"
                   id="dateOfBirth"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.dateOfBirth}
                   onChange={handleChange}
                   max={new Date().toISOString().split('T')[0]}
                 />
+                  <FiCalendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="gender" className="block text-sm font-medium text-green-700">
                   Gender <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <select
                   name="gender"
                   id="gender"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.gender}
                   onChange={handleChange}
                 >
@@ -200,38 +227,46 @@ const CompleteProfile = () => {
                   <option value="other">Other</option>
                   <option value="prefer-not-to-say">Prefer not to say</option>
                 </select>
+                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-green-700">
                   Phone Number <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="tel"
                   name="phoneNumber"
                   id="phoneNumber"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="+1 (555) 123-4567"
                 />
+                  <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="address" className="block text-sm font-medium text-green-700">
                   Address <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="address"
                   id="address"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.address}
                   onChange={handleChange}
                   placeholder="123 Main St, City, Country"
                 />
+                  <FiMapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -249,13 +284,14 @@ const CompleteProfile = () => {
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="bloodType" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="bloodType" className="block text-sm font-medium text-green-700">
                   Blood Type
                 </label>
+                <div className="relative">
                 <select
                   name="bloodType"
                   id="bloodType"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.bloodType}
                   onChange={handleChange}
                 >
@@ -270,54 +306,52 @@ const CompleteProfile = () => {
                   <option value="O-">O-</option>
                   <option value="unknown">I don't know</option>
                 </select>
+                  <FiHeart className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="height" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="height" className="block text-sm font-medium text-green-700">
                   Height (cm)
                 </label>
-                <div className="relative mt-1 rounded-md shadow-sm">
+                <div className="relative">
                   <input
                     type="number"
                     name="height"
                     id="height"
                     min="100"
                     max="250"
-                    className="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                     value={formData.height}
                     onChange={handleChange}
                     placeholder="175"
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
-                    cm
-                  </div>
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-400">cm</span>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="weight" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="weight" className="block text-sm font-medium text-green-700">
                   Weight (kg)
                 </label>
-                <div className="relative mt-1 rounded-md shadow-sm">
+                <div className="relative">
                   <input
                     type="number"
                     name="weight"
                     id="weight"
                     min="30"
                     max="200"
-                    className="block w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                     value={formData.weight}
                     onChange={handleChange}
                     placeholder="70"
                   />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
-                    kg
-                  </div>
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-400">kg</span>
                 </div>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <label htmlFor="allergies" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="allergies" className="block text-sm font-medium text-green-700">
                   Allergies
                 </label>
                 <div className="relative">
@@ -325,47 +359,49 @@ const CompleteProfile = () => {
                     name="allergies"
                     id="allergies"
                     rows="2"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                     placeholder="List any allergies (e.g., penicillin, peanuts)"
                     value={formData.allergies}
                     onChange={handleChange}
                   />
-                  {!formData.allergies && (
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <span className="text-gray-400 text-xs">Optional</span>
-                    </div>
-                  )}
+                  <FiAlertCircle className="absolute left-3 top-3 text-green-400" />
                 </div>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <label htmlFor="currentMedications" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="currentMedications" className="block text-sm font-medium text-green-700">
                   Current Medications
                 </label>
+                <div className="relative">
                 <textarea
                   name="currentMedications"
                   id="currentMedications"
                   rows="2"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   placeholder="List current medications and dosages"
                   value={formData.currentMedications}
                   onChange={handleChange}
                 />
+                  <FiAlertCircle className="absolute left-3 top-3 text-green-400" />
+                </div>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <label htmlFor="chronicConditions" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="chronicConditions" className="block text-sm font-medium text-green-700">
                   Chronic Conditions
                 </label>
+                <div className="relative">
                 <textarea
                   name="chronicConditions"
                   id="chronicConditions"
                   rows="2"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   placeholder="List any chronic conditions (e.g., diabetes, hypertension)"
                   value={formData.chronicConditions}
                   onChange={handleChange}
                 />
+                  <FiAlertCircle className="absolute left-3 top-3 text-green-400" />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -381,16 +417,14 @@ const CompleteProfile = () => {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="space-y-6"
           >
-            <div className="p-4 bg-blue-50 rounded-lg mb-6">
+            <div className="p-4 bg-green-50 rounded-lg mb-6">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clipRule="evenodd" />
-                  </svg>
+                  <FiAlertCircle className="h-5 w-5 text-green-400" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-blue-800">Emergency Contact</h3>
-                  <div className="mt-2 text-sm text-blue-700">
+                  <h3 className="text-sm font-medium text-green-800">Emergency Contact</h3>
+                  <div className="mt-2 text-sm text-green-700">
                     <p>This information will only be used in case of emergency. Please provide someone we can contact if needed.</p>
                   </div>
                 </div>
@@ -399,51 +433,60 @@ const CompleteProfile = () => {
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="emergencyContact.name" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="emergencyContact.name" className="block text-sm font-medium text-green-700">
                   Contact Name <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="emergencyContact.name"
                   id="emergencyContact.name"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.emergencyContact.name}
                   onChange={handleChange}
                   placeholder="Jane Smith"
                 />
+                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="emergencyContact.relationship" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="emergencyContact.relationship" className="block text-sm font-medium text-green-700">
                   Relationship <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="emergencyContact.relationship"
                   id="emergencyContact.relationship"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.emergencyContact.relationship}
                   onChange={handleChange}
                   placeholder="Spouse, Parent, Friend, etc."
                 />
+                  <FiUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <label htmlFor="emergencyContact.phone" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="emergencyContact.phone" className="block text-sm font-medium text-green-700">
                   Contact Phone <span className="text-red-500">*</span>
                 </label>
+                <div className="relative">
                 <input
                   type="tel"
                   name="emergencyContact.phone"
                   id="emergencyContact.phone"
                   required
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.emergencyContact.phone}
                   onChange={handleChange}
                   placeholder="+1 (555) 987-6543"
                 />
+                  <FiPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -459,16 +502,14 @@ const CompleteProfile = () => {
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="space-y-6"
           >
-            <div className="p-4 bg-yellow-50 rounded-lg mb-6">
+            <div className="p-4 bg-green-50 rounded-lg mb-6">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <svg className="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
+                  <FiCreditCard className="h-5 w-5 text-green-400" />
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-medium text-yellow-800">Insurance Information</h3>
-                  <div className="mt-2 text-sm text-yellow-700">
+                  <h3 className="text-sm font-medium text-green-800">Insurance Information</h3>
+                  <div className="mt-2 text-sm text-green-700">
                     <p>This information is optional but will help us process any claims more efficiently.</p>
                   </div>
                 </div>
@@ -477,48 +518,57 @@ const CompleteProfile = () => {
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="insuranceInfo.provider" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="insuranceInfo.provider" className="block text-sm font-medium text-green-700">
                   Insurance Provider
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="insuranceInfo.provider"
                   id="insuranceInfo.provider"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.insuranceInfo.provider}
                   onChange={handleChange}
                   placeholder="Blue Cross, Aetna, etc."
                 />
+                  <FiCreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="insuranceInfo.policyNumber" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="insuranceInfo.policyNumber" className="block text-sm font-medium text-green-700">
                   Policy Number
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="insuranceInfo.policyNumber"
                   id="insuranceInfo.policyNumber"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.insuranceInfo.policyNumber}
                   onChange={handleChange}
                   placeholder="123456789"
                 />
+                  <FiCreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="sm:col-span-2 space-y-2">
-                <label htmlFor="insuranceInfo.groupNumber" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="insuranceInfo.groupNumber" className="block text-sm font-medium text-green-700">
                   Group Number
                 </label>
+                <div className="relative">
                 <input
                   type="text"
                   name="insuranceInfo.groupNumber"
                   id="insuranceInfo.groupNumber"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.insuranceInfo.groupNumber}
                   onChange={handleChange}
                   placeholder="XYZ123"
                 />
+                  <FiCreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -536,13 +586,14 @@ const CompleteProfile = () => {
           >
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div className="space-y-2">
-                <label htmlFor="preferredLanguage" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="preferredLanguage" className="block text-sm font-medium text-green-700">
                   Preferred Language
                 </label>
+                <div className="relative">
                 <select
                   name="preferredLanguage"
                   id="preferredLanguage"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
+                    className="w-full px-4 py-3 pl-10 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
                   value={formData.preferredLanguage}
                   onChange={handleChange}
                 >
@@ -556,10 +607,12 @@ const CompleteProfile = () => {
                   <option value="arabic">Arabic</option>
                   <option value="other">Other</option>
                 </select>
+                  <FiGlobe className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-400" />
+                </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="profilePicture" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="profilePicture" className="block text-sm font-medium text-green-700">
                   Profile Picture
                 </label>
                 <div className="mt-1 flex items-center">
@@ -568,7 +621,7 @@ const CompleteProfile = () => {
                       <img 
                         src={previewImage} 
                         alt="Profile preview" 
-                        className="h-16 w-16 rounded-full object-cover border-2 border-indigo-100"
+                        className="h-16 w-16 rounded-full object-cover border-2 border-green-100"
                       />
                       <button
                         type="button"
@@ -584,15 +637,13 @@ const CompleteProfile = () => {
                   ) : (
                     <div className="flex flex-col items-center space-y-2 w-full">
                       <div className="flex items-center justify-center w-full">
-                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition duration-200">
+                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-green-200 border-dashed rounded-lg cursor-pointer bg-green-50 hover:bg-green-100 transition duration-200">
                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                            </svg>
-                            <p className="mb-2 text-sm text-gray-500">
+                            <FiCamera className="w-8 h-8 mb-4 text-green-400" />
+                            <p className="mb-2 text-sm text-green-600">
                               <span className="font-semibold">Click to upload</span> or drag and drop
                             </p>
-                            <p className="text-xs text-gray-500">PNG, JPG (MAX. 5MB)</p>
+                            <p className="text-xs text-green-500">PNG, JPG (MAX. 5MB)</p>
                           </div>
                           <input 
                             id="profilePicture" 
@@ -634,8 +685,8 @@ const CompleteProfile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -650,10 +701,28 @@ const CompleteProfile = () => {
           </p>
         </motion.div>
 
-        {/* Progress indicator */}
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Side Navigation */}
+          <div className="lg:w-1/4">
+            <div className="bg-white rounded-xl shadow-sm p-6 sticky top-8">
+              <div className="mb-6">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${(currentStep / steps.length) * 100}%` }}
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mt-2">
+                  Step {currentStep} of {steps.length}
+                </p>
+              </div>
         {renderStepIndicator()}
+            </div>
+          </div>
 
-        <div className="bg-white shadow-xl rounded-xl overflow-hidden">
+          {/* Main Content */}
+          <div className="lg:w-3/4">
+            <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <form onSubmit={handleSubmit} className="p-6 sm:p-8">
             <AnimatePresence mode="wait">
               {renderStep()}
@@ -666,7 +735,7 @@ const CompleteProfile = () => {
                   onClick={prevStep}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200"
+                      className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
                 >
                   <svg className="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -674,7 +743,7 @@ const CompleteProfile = () => {
                   Previous
                 </motion.button>
               ) : (
-                <div></div> // Empty div to maintain space
+                    <div></div>
               )}
               
               {currentStep < steps.length ? (
@@ -683,7 +752,7 @@ const CompleteProfile = () => {
                   onClick={nextStep}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200"
+                      className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
                 >
                   Next
                   <svg className="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -696,7 +765,7 @@ const CompleteProfile = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   disabled={isSubmitting}
-                  className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
+                      className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
@@ -721,9 +790,11 @@ const CompleteProfile = () => {
         </div>
 
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-600">
             Your information is secure and will only be used to provide you with better healthcare services.
           </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

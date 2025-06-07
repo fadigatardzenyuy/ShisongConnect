@@ -40,6 +40,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Call-to-action buttons for hospital details and direct calling
 - Loading skeleton for hospital cards
 - Placeholder image handling for hospitals without images
+- Appointment booking system with multi-step flow
+- Hospital details page with comprehensive information
+- Mobile money payment integration
+- PDF generation for appointment confirmation
+- Tour overlay system for user guidance
+- Help assistant component with interactive features
+- Modern medical theme with green color palette
+- Custom button components with primary/secondary variants
+- Animated landing page with video background
+- Floating leaf decorations for visual appeal
+- Feature cards with hover animations
+- Social proof section with user avatars
+- Footer with navigation links and branding
 
 ### Changed
 - Updated UI components with modern design
@@ -49,6 +62,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refined mobile navigation experience
 - Improved header layout and responsiveness
 - Enhanced user profile interaction design
+- Updated color scheme to medical green theme
+- Enhanced mobile responsiveness across all components
+- Improved navigation with bottom mobile menu
+- Refined header design with new color scheme
+- Updated dashboard cards with new styling
+- Enhanced form layouts and input styling
+- Improved button designs with new variants
+- Optimized landing page animations
+- Updated typography with Roboto font family
+- Enhanced visual hierarchy with new color palette
 
 ### Fixed
 - Form validation edge cases
@@ -57,6 +80,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Data persistence between form steps
 - Mobile menu toggle functionality
 - Profile dropdown positioning and interaction
+- Mobile navigation overlap issues
+- Header spacing and alignment
+- Font size consistency across components
+- Color blending on landing page
+- Mobile responsiveness in dashboard cards
+- Navigation menu positioning
+- Button text contrast issues
+- Form input styling consistency
+- Animation performance on mobile devices
+- Layout overflow issues in various components
 
 ## [0.1.0] - 2024-03-19
 

@@ -1,118 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-primary: #306ce9;
-  --color-primary-light: #4d7eec;
-  --color-primary-dark: #2557c0;
-  --color-background: #f8faff;
-  --color-surface: #ffffff;
-  --color-text: #1a1f36;
-  --color-text-secondary: #4f566b;
-  --color-border: #e6e8f0;
-}
-
-body {
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
 @layer base {
   :root {
-    --background: 220 100% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 222 90% 55%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 222 90% 55%;
+    /* Core Green Colors */
+    --color-primary: #16A34A;
+    /* Forest green */
+    --color-primary-foreground: #F0FDF4;
+    --color-secondary: #4ADE80;
+    /* Spring green */
+    --color-secondary-foreground: #052E16;
+    --color-accent: #22C55E;
+    /* Emerald */
+    --color-accent-foreground: #F0FDF4;
+    --color-destructive: #EF4444;
+    /* Danger red */
+    --color-destructive-foreground: #F0FDF4;
+    --color-muted: #BBF7D0;
+    /* Fresh mint */
+    --color-muted-foreground: #166534;
+    /* Dark evergreen */
+
+    /* Background Colors */
+    --background: #F0FDF4;
+    /* Mint cream */
+    --foreground: #052E16;
+    /* Near-black green */
+
+    /* Border Colors */
+    --border: #86EFAC;
+    /* Light sage */
+    --input: #BBF7D0;
+    /* Fresh mint */
+    --ring: #22C55E;
+    /* Emerald */
+
+    /* Card Colors */
+    --card: #FFFFFF;
+    --card-foreground: #052E16;
+
+    /* Popover Colors */
+    --popover: #FFFFFF;
+    --popover-foreground: #052E16;
+
+    /* Radius */
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: #052E16;
+    /* Near-black green */
+    --foreground: #F0FDF4;
+    /* Mint cream */
+
+    --card: #14532D;
+    /* Rich moss */
+    --card-foreground: #F0FDF4;
+
+    --popover: #14532D;
+    /* Rich moss */
+    --popover-foreground: #F0FDF4;
+
+    --primary: #4ADE80;
+    /* Spring green */
+    --primary-foreground: #F0FDF4;
+
+    --secondary: #22C55E;
+    /* Emerald */
+    --secondary-foreground: #F0FDF4;
+
+    --muted: #15803D;
+    /* Deep forest */
+    --muted-foreground: #BBF7D0;
+    /* Fresh mint */
+
+    --accent: #16A34A;
+    /* Forest green */
+    --accent-foreground: #F0FDF4;
+
+    --destructive: #EF4444;
+    /* Danger red */
+    --destructive-foreground: #F0FDF4;
+
+    --border: #166534;
+    /* Dark evergreen */
+    --input: #15803D;
+    /* Deep forest */
+    --ring: #22C55E;
+    /* Emerald */
   }
 }
 
@@ -123,5 +101,66 @@ button:focus-visible {
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-foreground;
+  }
+
+  h1 {
+    @apply text-4xl leading-tight mb-6;
+  }
+
+  button {
+    @apply rounded-lg px-6 py-3 text-base font-medium cursor-pointer transition-all duration-300;
+  }
+
+  button:focus,
+  button:focus-visible {
+    @apply outline-none ring-2 ring-green-400;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-green-600 text-green-50 hover:bg-green-700 focus:ring-2 focus:ring-green-400 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-harmony-sage text-green-800 hover:bg-harmony-moss focus:ring-2 focus:ring-green-300 focus:ring-offset-2;
+  }
+
+  .btn-accent {
+    @apply bg-green-500 text-green-50 hover:bg-green-600 focus:ring-2 focus:ring-green-300 focus:ring-offset-2;
+  }
+
+  .btn-danger {
+    @apply bg-danger text-white hover:bg-danger/90 focus:ring-2 focus:ring-danger/50 focus:ring-offset-2;
+  }
+
+  .emergency-button {
+    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90 border-0;
+  }
+
+  .medical-card {
+    @apply bg-card rounded-lg shadow-sm border border-border p-6;
+  }
+
+  .medical-alert {
+    @apply bg-green-50 border-l-4 border-green-400 text-green-800 p-4 rounded-r-lg;
+  }
+
+  .medical-alert-warning {
+    @apply bg-harmony-sage border-l-4 border-warning text-green-700 p-4 rounded-r-lg;
+  }
+
+  .medical-alert-danger {
+    @apply bg-harmony-moss border-l-4 border-danger text-green-900 p-4 rounded-r-lg;
   }
 }

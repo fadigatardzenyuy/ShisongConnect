@@ -45,7 +45,7 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
       {/* Floating Help Button */}
       <motion.button
         onClick={handleToggle}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-xl hover:bg-blue-700 transition-all z-40 flex items-center justify-center"
+        className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 bg-green-600 text-white p-3 sm:p-4 rounded-full shadow-xl hover:bg-green-700 transition-all z-40 flex items-center justify-center"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Help assistant"
@@ -58,7 +58,7 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
               exit={{ rotate: 180 }}
               key="help"
             >
-              <FiHelpCircle className="h-6 w-6" />
+              <FiHelpCircle className="h-5 w-5 sm:h-6 sm:w-6" />
             </motion.div>
           ) : (
             <motion.div
@@ -67,7 +67,7 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
               exit={{ rotate: -180 }}
               key="close"
             >
-              <FiX className="h-6 w-6" />
+              <FiX className="h-5 w-5 sm:h-6 sm:w-6" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -81,35 +81,35 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ type: 'spring', damping: 25 }}
-            className="fixed bottom-24 right-6 w-96 bg-white rounded-xl shadow-2xl overflow-hidden z-40"
+            className="fixed top-20 sm:top-24 bottom-24 sm:bottom-24 right-4 sm:right-6 w-[calc(100%-2rem)] sm:w-96 bg-white rounded-xl shadow-2xl overflow-hidden z-40 flex flex-col"
           >
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-6 text-white">
+            <div className="bg-gradient-to-r from-green-600 to-green-700 p-4 sm:p-6 text-white flex-shrink-0">
               <div className="flex justify-between items-center">
-                <h3 className="text-xl font-semibold">Healthcare Assistant</h3>
+                <h3 className="text-lg sm:text-xl font-semibold">Healthcare Assistant</h3>
                 <button
                   onClick={handleToggle}
-                  className="text-white hover:text-blue-100 transition-colors"
+                  className="text-white hover:text-green-100 transition-colors"
                   aria-label="Close help"
                 >
-                  <FiX className="h-6 w-6" />
+                  <FiX className="h-5 w-5 sm:h-6 sm:w-6" />
                 </button>
               </div>
-              <p className="mt-2 text-blue-100 text-sm">
+              <p className="mt-2 text-green-100 text-sm">
                 How can we assist you today?
               </p>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-y-auto flex-grow">
               <button
                 onClick={onStartTour}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition-colors flex items-center justify-center space-x-2"
+                className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 sm:py-3 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base font-medium"
               >
                 <FiPlay className="h-4 w-4" />
                 <span>Start Guided Platform Tour</span>
               </button>
 
               <div className="border-t border-gray-100 pt-4">
-                <h4 className="font-medium text-gray-800 mb-4 text-lg">Frequently Asked Questions</h4>
+                <h4 className="font-medium text-gray-800 mb-4 text-base sm:text-lg">Frequently Asked Questions</h4>
                 <div className="space-y-3">
                   {helpTopics.map((topic, index) => (
                     <div 
@@ -118,15 +118,15 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
                     >
                       <button
                         onClick={() => toggleFAQ(index)}
-                        className="w-full text-left p-4 bg-gray-50 hover:bg-gray-100 transition-colors flex justify-between items-center"
+                        className="w-full text-left p-3 sm:p-4 bg-gray-50 hover:bg-gray-100 transition-colors flex justify-between items-center"
                         aria-expanded={expandedIndex === index}
                         aria-controls={`faq-${index}`}
                       >
-                        <h5 className="font-medium text-gray-800">{topic.question}</h5>
+                        <h5 className="font-medium text-gray-800 text-sm sm:text-base leading-snug">{topic.question}</h5>
                         {expandedIndex === index ? (
-                          <FiChevronUp className="text-gray-500" />
+                          <FiChevronUp className="text-gray-500 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
                         ) : (
-                          <FiChevronDown className="text-gray-500" />
+                          <FiChevronDown className="text-gray-500 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
                         )}
                       </button>
                       <AnimatePresence>
@@ -139,7 +139,7 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
                             transition={{ duration: 0.2 }}
                             className="overflow-hidden"
                           >
-                            <div className="p-4 pt-2 text-sm text-gray-600 bg-white">
+                            <div className="p-3 sm:p-4 pt-2 text-sm text-gray-600 bg-white leading-relaxed">
                               {topic.answer}
                             </div>
                           </motion.div>
@@ -151,9 +151,9 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
               </div>
             </div>
 
-            <div className="bg-gray-50 px-6 py-3 border-t border-gray-200 text-center">
+            <div className="bg-gray-50 px-4 sm:px-6 py-3 border-t border-gray-200 text-center">
               <p className="text-sm text-gray-600">
-                Need more help? <button className="text-blue-600 hover:text-blue-800 font-medium">Contact Support</button>
+                Need more help? <button className="text-green-600 hover:text-green-800 font-medium">Contact Support</button>
               </p>
             </div>
           </motion.div>

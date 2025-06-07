@@ -1,17 +1,22 @@
 import { MapPin, Phone, Mail, Clock, ArrowRight, Calendar, Stethoscope, Ambulance, Users, Star, HeartPulse, Pill, Microscope, Brain } from "lucide-react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import hospitals from '../data/hospitals.json';
 import React from 'react';
 import bamendaPlaceholder from '../assets/bamenda.jpg'; // Import the local image
 
 export default function HospitalDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const hospitalId = parseInt(id, 10);
   const hospital = hospitals.find(h => h.id === hospitalId);
 
   if (!hospital) {
     return <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 text-center text-red-600">Hospital not found</div>;
   }
+
+  const handleBookAppointment = () => {
+    navigate(`/book-appointment/${hospitalId}`);
+  };
 
   // Service icons mapping
   const serviceIcons = {
@@ -65,7 +70,10 @@ export default function HospitalDetails() {
       </div>
       {/* Action Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
-        <button className="group flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-600">
+        <button 
+          onClick={handleBookAppointment}
+          className="group flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-medium py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-blue-600"
+        >
           <Calendar className="w-5 h-5 transition-transform group-hover:scale-110" />
           <span>Book Appointment</span>
           <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />

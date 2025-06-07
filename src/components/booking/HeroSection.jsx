@@ -11,14 +11,14 @@ function HeroSection() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative bg-gradient-to-br from-blue-600 to-cyan-600 text-white py-16 px-4 mx-4 rounded-2xl"
+      className="relative bg-gradient-to-br from-healing-500 to-healing-400 text-white py-16 px-4 mx-4 rounded-2xl"
       style={{ 
         backgroundImage: `url(${heroBackground})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/80 to-cyan-600/80 rounded-2xl z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-healing-600/80 to-healing-500/80 rounded-2xl z-0"></div>
 
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-10">
@@ -26,7 +26,7 @@ function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-base font-medium mb-2 text-cyan-100"
+            className="text-base font-medium mb-2 text-healing-100"
           >
             Find & Book Hospital Services
           </motion.h3>
@@ -36,8 +36,8 @@ function HeroSection() {
             transition={{ delay: 0.3 }}
             className="text-3xl md:text-4xl font-bold mb-5 leading-tight"
           >
-            Top <span className="text-cyan-200">Hospitals</span> in Your{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-100">
+            Top <span className="text-healing-200">Hospitals</span> in Your{' '}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-healing-100">
               Area
             </span>
           </motion.h1>
@@ -57,7 +57,7 @@ function HeroSection() {
           transition={{ delay: 0.5 }}
           className="flex justify-center"
         >
-          <div className={`flex w-full max-w-xl bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 ${isFocused ? 'ring-2 ring-cyan-300' : ''}`}>
+          <div className={`flex w-full max-w-xl bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 ${isFocused ? 'ring-2 ring-healing-300' : ''}`}>
             <input
               type="text"
               value={searchValue}
@@ -65,12 +65,12 @@ function HeroSection() {
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder="Search hospitals..."
-              className="flex-grow px-5 py-3 text-gray-800 placeholder-gray-400 focus:outline-none text-base rounded-l-2xl"
+              className="flex-grow px-5 py-3 text-healing-900 placeholder-healing-300 focus:outline-none text-base rounded-l-2xl"
             />
             <motion.button 
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-6 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium flex items-center gap-2 rounded-r-2xl"
+              className="px-6 bg-gradient-to-r from-healing-500 to-healing-400 text-white font-medium flex items-center gap-2 rounded-r-2xl"
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 

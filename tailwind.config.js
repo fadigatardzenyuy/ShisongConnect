@@ -26,50 +26,82 @@ module.exports = {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			colors: {
-				primary: '#4682B4',
-				accent: '#90EE90',
-				'background-light': '#F8F8F8',
-				'text-dark': '#333333',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+				// Core Green palette
+				green: {
+					50: '#F0FDF4',   // Mint cream
+					100: '#DCFCE7',  // Soft mint
+					200: '#BBF7D0',  // Fresh mint
+					300: '#86EFAC',  // Light sage
+					400: '#4ADE80',  // Spring green
+					500: '#22C55E',  // Emerald
+					600: '#16A34A',  // Forest green
+					700: '#15803D',  // Deep forest
+					800: '#166534',  // Dark evergreen
+					900: '#14532D',  // Rich moss
+					950: '#052E16',  // Near-black green
 				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+
+				// Complementary colors
+				harmony: {
+					cream: '#F0FDF4',  // Mint cream
+					sage: '#DCFCE7',   // Soft mint
+					moss: '#BBF7D0',   // Fresh mint
+					leaf: '#86EFAC',   // Light sage
+					forest: '#16A34A', // Forest green
 				},
+
+				// Semantic colors
+				success: '#16A34A',
+				warning: '#EAB308',
+				danger: '#EF4444',
+				info: '#0EA5E9',
+
+				// UI colors
+				border: "hsl(var(--border))",
+				input: "hsl(var(--input))",
+				ring: "hsl(var(--ring))",
+				background: "hsl(var(--background))",
+				foreground: "hsl(var(--foreground))",
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: "var(--color-primary)",
+					foreground: "var(--color-primary-foreground)",
 				},
 				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: "var(--color-secondary)",
+					foreground: "var(--color-secondary-foreground)",
 				},
 				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
+					DEFAULT: "var(--color-destructive)",
+					foreground: "var(--color-destructive-foreground)",
 				},
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				chart: {
-					'1': 'hsl(var(--chart-1))',
-					'2': 'hsl(var(--chart-2))',
-					'3': 'hsl(var(--chart-3))',
-					'4': 'hsl(var(--chart-4))',
-					'5': 'hsl(var(--chart-5))'
-				}
+				muted: {
+					DEFAULT: "var(--color-muted)",
+					foreground: "var(--color-muted-foreground)",
+				},
+				accent: {
+					DEFAULT: "var(--color-accent)",
+					foreground: "var(--color-accent-foreground)",
+				},
+				popover: {
+					DEFAULT: "hsl(var(--popover))",
+					foreground: "hsl(var(--popover-foreground))",
+				},
+				card: {
+					DEFAULT: "hsl(var(--card))",
+					foreground: "hsl(var(--card-foreground))",
+				},
+				// Medical-specific colors
+				'doctor-blue': '#0284C7',
+				'nurse-teal': '#0D9488',
+				'pharmacy-purple': '#7C3AED',
+				'emergency-red': '#DC2626',
+				'hygiene-white': '#F8FAFC',
+			},
+			transitionDuration: {
+				'250': '250ms',
+				'300': '300ms',
+				'400': '400ms',
+				'500': '500ms',
 			},
 			keyframes: {
 				"accordion-down": {
@@ -96,6 +128,10 @@ module.exports = {
 					"0%, 100%": { transform: "translateY(0)" },
 					"50%": { transform: "translateY(-5px)" },
 				},
+				"pulse-soft": {
+					"0%, 100%": { opacity: "1" },
+					"50%": { opacity: "0.7" },
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -104,9 +140,9 @@ module.exports = {
 				"slide-up": "slide-up 0.3s ease-out",
 				"bounce-slow": "bounce-slow 2s infinite",
 				"float": "float 3s ease-in-out infinite",
+				"pulse-soft": "pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
 			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
 }
-

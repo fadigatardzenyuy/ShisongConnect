@@ -7,8 +7,12 @@ import Signup from '../pages/patient/authentication/Signup';
 import Dashboard from '../pages/Dashboard';
 import CompleteProfile from '../pages/CompleteProfile';
 import BookAppointmentPage from '../pages/patient/BookAppointmentPage';
+import AppointmentBookingForm from '../components/booking/AppointmentBookingForm';
+import AppointmentPreview from '../pages/patient/appointments/AppointmentPreview';
+import PaymentPage from '../pages/patient/appointments/PaymentPage';
 import Header from './layout/Header';
 import HospitalDetails from '../pages/HospitalDetailsPage';
+import BottomMobileNav from './layout/BottomMobileNav';
 
 const ResponsiveRouter = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -17,17 +21,24 @@ const ResponsiveRouter = () => {
   const pathsWithHeader = [
     '/dashboard',
     '/book-appointment',
+    '/book-appointment/:hospitalId',
+    '/appointment/preview',
+    '/appointment/payment',
     '/records',
     '/reminders',
     '/profile',
     '/settings',
     '/help',
-    // The dynamic route pattern is handled in the showHeader logic
-    // '/hospital/:id' 
+    '/hospital/:id'
   ];
 
-  // Check if the current path is in pathsWithHeader or matches the /hospital/:id pattern
-  const showHeader = pathsWithHeader.includes(location.pathname) || location.pathname.startsWith('/hospital/');
+  // Check if the current path matches any of the pathsWithHeader patterns
+  const showHeader = pathsWithHeader.some(path => {
+    // Convert path pattern to regex
+    const pattern = path.replace(/:[^/]+/g, '[^/]+');
+    const regex = new RegExp(`^${pattern}$`);
+    return regex.test(location.pathname);
+  });
 
   useEffect(() => {
     const checkMobile = () => {
@@ -47,6 +58,7 @@ const ResponsiveRouter = () => {
   return (
     <>
       {showHeader && <Header />}
+      <div className={isMobile && showHeader ? 'pb-14' : ''}>
       <Routes>
         <Route 
           path="/" 
@@ -57,9 +69,14 @@ const ResponsiveRouter = () => {
         <Route path="/complete-profile" element={<CompleteProfile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/book-appointment" element={<BookAppointmentPage />} />
+          <Route path="/book-appointment/:hospitalId" element={<AppointmentBookingForm />} />
+          <Route path="/appointment/preview" element={<AppointmentPreview />} />
+          <Route path="/appointment/payment" element={<PaymentPage />} />
         <Route path="/hospital/:id" element={<HospitalDetails />} />
         {/* Add other routes as needed */}
       </Routes>
+      </div>
+      {isMobile && showHeader && <BottomMobileNav />}
     </>
   );
 };

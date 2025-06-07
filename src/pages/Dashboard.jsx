@@ -94,33 +94,28 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="p-6 max-w-[1400px] mx-auto">
-        
-        
-        <div className={`welcome-banner transition-all duration-300 mt-8 mb-8 ${highlightedElement ? (highlightedElement === '.welcome-banner' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+      <div className="px-2 sm:px-4 md:px-6 max-w-[1400px] mx-auto">
+        <div className={`welcome-banner transition-all duration-300 mt-4 mb-4 sm:mt-6 sm:mb-6 ${highlightedElement ? (highlightedElement === '.welcome-banner' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
           <WelcomeBanner />
         </div>
-        
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-8">
           {/* Left Column - Quick Actions and Appointments */}
-          <div className="flex flex-col gap-8">
-            <div className={`quick-actions transition-all duration-300 bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${highlightedElement ? (highlightedElement === '.quick-actions' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+          <div className="flex flex-col gap-4 sm:gap-6">
+            <div className={`quick-actions transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full ${highlightedElement ? (highlightedElement === '.quick-actions' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
               <QuickActionsCard />
             </div>
-            <div className={`appointments transition-all duration-300 bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 ${highlightedElement ? (highlightedElement === '.appointments' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+            <div className={`appointments transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full ${highlightedElement ? (highlightedElement === '.appointments' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
               <MyAppointmentsCard />
             </div>
           </div>
-
           {/* Right Column - Health Tips (Full Height) */}
-          <div className="h-full">
-            <div className={`health-tips transition-all duration-300 bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 h-full ${highlightedElement ? (highlightedElement === '.health-tips' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+          <div className="h-full w-full mt-4 lg:mt-0">
+            <div className={`health-tips transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 h-full w-full ${highlightedElement ? (highlightedElement === '.health-tips' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
               <HealthTipsCard />
             </div>
           </div>
         </div>
-
         {/* Tour Overlay */}
         {showTour && (
           <TourOverlay
@@ -131,7 +126,6 @@ function Dashboard() {
             onSkip={handleSkip}
           />
         )}
-
         {/* Help Assistant */}
         {showHelpAssistant && (
           <HelpAssistant
@@ -139,14 +133,13 @@ function Dashboard() {
             onClose={() => setShowHelpAssistant(false)}
           />
         )}
-
         {/* Help Assistant Button */}
         {!showHelpAssistant && (
           <button
             onClick={() => setShowHelpAssistant(true)}
-            className="fixed bottom-8 right-8 bg-blue-600 text-white p-5 rounded-full shadow-xl hover:bg-blue-700 transition-all transform hover:scale-110 z-40 animate-bounce-slow"
+            className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 bg-green-600 text-white p-4 sm:p-5 rounded-full shadow-xl hover:bg-green-700 transition-all transform hover:scale-110 z-40 animate-bounce-slow"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 sm:h-8 sm:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </button>
