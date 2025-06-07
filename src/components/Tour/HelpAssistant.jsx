@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FiX, FiHelpCircle, FiChevronDown, FiChevronUp, FiPlay } from 'react-icons/fi';
+import { FiX, FiHelpCircle, FiChevronDown, FiChevronUp, FiPlay, FiCalendar } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const HelpAssistant = ({ onStartTour, onClose }) => {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleFAQ = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -15,6 +17,15 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
     if (!isOpen) {
       setExpandedIndex(null); // Reset expanded FAQ when closing
     }
+  };
+
+  const startBookingTour = () => {
+    setIsOpen(false); // Close the help panel
+    navigate('/book-appointment'); // Navigate directly to booking page
+    // Small delay to ensure navigation completes
+    setTimeout(() => {
+      onStartTour('booking'); // Start the booking tour
+    }, 100);
   };
 
   const helpTopics = [
@@ -100,13 +111,23 @@ const HelpAssistant = ({ onStartTour, onClose }) => {
             </div>
 
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-y-auto flex-grow">
-              <button
-                onClick={onStartTour}
-                className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 sm:py-3 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base font-medium"
-              >
-                <FiPlay className="h-4 w-4" />
-                <span>Start Guided Platform Tour</span>
-              </button>
+              <div className="space-y-3">
+                <button
+                  onClick={onStartTour}
+                  className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 sm:py-3 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base font-medium"
+                >
+                  <FiPlay className="h-4 w-4" />
+                  <span>Start Platform Tour</span>
+                </button>
+
+                <button
+                  onClick={startBookingTour}
+                  className="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2.5 sm:py-3 rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base font-medium"
+                >
+                  <FiCalendar className="h-4 w-4" />
+                  <span>Start Booking Process Tour</span>
+                </button>
+              </div>
 
               <div className="border-t border-gray-100 pt-4">
                 <h4 className="font-medium text-gray-800 mb-4 text-base sm:text-lg">Frequently Asked Questions</h4>

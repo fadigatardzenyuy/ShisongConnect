@@ -45,7 +45,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mobile money payment integration
 - PDF generation for appointment confirmation
 - Tour overlay system for user guidance
-- Help assistant component with interactive features
+- Help assistant component with:
+  - Floating help button
+  - Interactive help panel
+  - Platform tour functionality
+  - Booking process tour
+  - FAQ section with expandable questions
+  - Support contact option
 - Modern medical theme with green color palette
 - Custom button components with primary/secondary variants
 - Animated landing page with video background
@@ -72,6 +78,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optimized landing page animations
 - Updated typography with Roboto font family
 - Enhanced visual hierarchy with new color palette
+- Removed standalone replay tour button in favor of HelpAssistant integration
+- Updated tour navigation to use HelpAssistant consistently across pages
+- Improved tour flow in HospitalDetailsPage:
+  - Reordered tour steps for better user experience
+  - Enhanced button highlighting during tour
+  - Fixed positioning of "Get Directions" button in tour
+  - Made "Book Appointment" the final step in the tour
 
 ### Fixed
 - Form validation edge cases
@@ -90,6 +103,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Form input styling consistency
 - Animation performance on mobile devices
 - Layout overflow issues in various components
+- Fixed positioning of "Get Directions" button in hospital details tour
+- Resolved tour button positioning issues
+- Improved tour step transitions and animations
 
 ## [0.1.0] - 2024-03-19
 
