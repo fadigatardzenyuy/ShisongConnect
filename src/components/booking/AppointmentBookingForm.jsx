@@ -8,7 +8,7 @@ import MedicalInfoSection from '../appointment/AppointmentForm/MedicalInfoSectio
 import AppointmentSection from '../appointment/AppointmentForm/AppointmentSection';
 import ReviewSection from '../appointment/AppointmentForm/ReviewSection';
 import hospitals from '../../data/hospitals.json';
-import BookingTour from '../Tour/BookingTour';
+import BookingTour from '../../components/Tour/BookingTour';
 
 const AppointmentBookingForm = () => {
   const { hospitalId } = useParams();
