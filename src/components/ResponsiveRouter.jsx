@@ -9,7 +9,7 @@ import CompleteProfile from '../pages/CompleteProfile';
 import BookAppointmentPage from '../pages/patient/BookAppointmentPage';
 import AppointmentBookingForm from '../components/booking/AppointmentBookingForm';
 import AppointmentPreview from '../pages/patient/appointments/AppointmentPreview';
-import PaymentPage from '../pages/patient/appointments/PaymentPage';
+import PaymentPage from '../components/payment/PaymentPage';
 import Header from './layout/Header';
 import HospitalDetails from '../pages/HospitalDetailsPage';
 import BottomMobileNav from './layout/BottomMobileNav';

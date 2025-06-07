@@ -1,110 +1,144 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Search, MapPin, Clock, Stethoscope, Ambulance, Pill, Microscope, Brain, HeartPulse } from "lucide-react";
 import { motion } from 'framer-motion';
 import heroBackground from '../../assets/bamenda.jpg';
 
-function HeroSection() {
-  const [searchValue, setSearchValue] = useState('');
-  const [isFocused, setIsFocused] = useState(false);
+export default function HeroSection() {
+  const services = [
+    { name: 'Cardiology', icon: <HeartPulse className="w-4 h-4 sm:w-5 sm:h-5" /> },
+    { name: 'Pharmacy', icon: <Pill className="w-4 h-4 sm:w-5 sm:h-5" /> },
+    { name: 'Neurology', icon: <Brain className="w-4 h-4 sm:w-5 sm:h-5" /> },
+    { name: 'Laboratory', icon: <Microscope className="w-4 h-4 sm:w-5 sm:h-5" /> },
+    { name: 'Emergency', icon: <Ambulance className="w-4 h-4 sm:w-5 sm:h-5" /> },
+    { name: 'General', icon: <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5" /> }
+  ];
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="relative bg-gradient-to-br from-healing-500 to-healing-400 text-white py-16 px-4 mx-4 rounded-2xl"
-      style={{ 
-        backgroundImage: `url(${heroBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-healing-600/80 to-healing-500/80 rounded-2xl z-0"></div>
-
-      <div className="max-w-4xl mx-auto relative z-10">
-        <div className="text-center mb-10">
-          <motion.h3 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-base font-medium mb-2 text-healing-100"
-          >
-            Find & Book Hospital Services
-          </motion.h3>
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-3xl md:text-4xl font-bold mb-5 leading-tight"
-          >
-            Top <span className="text-healing-200">Hospitals</span> in Your{' '}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-healing-100">
-              Area
-            </span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-base md:text-lg text-white/90 max-w-xl mx-auto"
-          >
-            Book appointments and find specialized care quickly
-          </motion.p>
+    <div className="w-full flex justify-center px-2 sm:px-4 pt-2 sm:pt-3 pb-6 sm:pb-10">
+      <div className="relative w-full max-w-[1920px] overflow-hidden rounded-2xl sm:rounded-3xl">
+        {/* Background Image with Overlay */}
+        <div 
+          className="absolute inset-0 z-0 rounded-2xl sm:rounded-3xl"
+          style={{
+            backgroundImage: `url(${heroBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-green-800/80 rounded-2xl sm:rounded-3xl" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="flex justify-center"
-        >
-          <div className={`flex w-full max-w-xl bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 ${isFocused ? 'ring-2 ring-healing-300' : ''}`}>
-            <input
-              type="text"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              placeholder="Search hospitals..."
-              className="flex-grow px-5 py-3 text-healing-900 placeholder-healing-300 focus:outline-none text-base rounded-l-2xl"
-            />
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-6 bg-gradient-to-r from-healing-500 to-healing-400 text-white font-medium flex items-center gap-2 rounded-r-2xl"
+        <div className="relative z-10 w-full px-4 sm:px-6 py-6 sm:py-8">
+          <div className="text-center mb-4 sm:mb-6">
+            <motion.h1 
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <span className="hidden sm:inline">Search</span>
-            </motion.button>
+              Find Your Healthcare Provider
+            </motion.h1>
+            <motion.p 
+              className="text-sm sm:text-base text-green-50 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              Book appointments with top-rated doctors and healthcare facilities in your area
+            </motion.p>
           </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="mt-5 flex justify-center gap-2 flex-wrap"
-        >
-          {['Emergency', 'Cardiology', 'Pediatrics', 'Oncology'].map((service) => (
-            <motion.button
-              key={service}
-              whileHover={{ y: -1 }}
-              className="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-md transition-colors"
-            >
-              {service}
-            </motion.button>
-          ))}
-        </motion.div>
+          {/* Search Section */}
+          <motion.div 
+            className="max-w-4xl mx-auto mb-4 sm:mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-2 sm:p-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                {/* Location Input */}
+                <div className="flex-1 flex items-center bg-white/80 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 mr-2 sm:mr-3" />
+                  <input
+                    type="text"
+                    placeholder="Enter your location"
+                    className="w-full bg-transparent border-none outline-none text-sm sm:text-base text-gray-700 placeholder-gray-500"
+                  />
+                </div>
+
+                {/* Search Input */}
+                <div className="flex-1 flex items-center bg-white/80 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5">
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 mr-2 sm:mr-3" />
+                  <input
+                    type="text"
+                    placeholder="Search for doctors, specialties, or services"
+                    className="w-full bg-transparent border-none outline-none text-sm sm:text-base text-gray-700 placeholder-gray-500"
+                  />
+                </div>
+
+                {/* Search Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="bg-green-600 text-white rounded-xl px-4 sm:px-6 py-2 sm:py-2.5 text-sm sm:text-base font-medium flex items-center justify-center gap-2 hover:bg-green-700 transition-colors"
+                >
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+                  Search
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Quick Service Buttons */}
+          <motion.div 
+            className="max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+              {services.map((service, index) => (
+                <motion.button
+                  key={service.name}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center gap-1.5 sm:gap-2 bg-white/90 backdrop-blur-sm text-gray-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-white/20 hover:bg-white transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.1 * index }}
+                >
+                  {service.icon}
+                  {service.name}
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Additional Info */}
+          <motion.div 
+            className="mt-4 sm:mt-6 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm sm:text-base text-green-50">
+              <div className="flex items-center">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                <span>24/7 Availability</span>
+              </div>
+              <div className="flex items-center">
+                <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                <span>Expert Doctors</span>
+              </div>
+              <div className="flex items-center">
+                <Ambulance className="w-4 h-4 sm:w-5 sm:h-5 mr-1.5 sm:mr-2" />
+                <span>Emergency Care</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
-
-export default HeroSection;

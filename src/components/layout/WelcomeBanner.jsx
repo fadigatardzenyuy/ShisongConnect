@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiCalendar, FiClock, FiArrowRight, FiUser, FiHeart, FiActivity } from 'react-icons/fi';
 import Typewriter from 'typewriter-effect';
+import { useNavigate } from 'react-router-dom';
 
 const WelcomeBanner = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBookAppointment = () => {
+    navigate('/book-appointment');
+  };
 
   return (
     <motion.div 
@@ -173,6 +179,7 @@ const WelcomeBanner = () => {
             boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)"
           }}
           whileTap={{ scale: 0.98 }}
+          onClick={handleBookAppointment}
           className="w-full flex items-center justify-center gap-2 bg-white text-green-600 px-4 py-3 rounded-xl font-semibold shadow-lg text-sm"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1,131 +1,117 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import WelcomeBanner from '../components/layout/WelcomeBanner';
 import QuickActionsCard from '../components/Dashboard/QuickActions/QuickActionsCard';
 import MyAppointmentsCard from '../components/Dashboard/Appointments/MyAppointmentsCard';
 import HealthTipsCard from '../components/Dashboard/HealthTips/HealthTipsCard';
-import TourOverlay from '../components/Tour/TourOverlay';
+import DashboardTour from '../components/Tour/DashboardTour';
 import HelpAssistant from '../components/Tour/HelpAssistant';
 
 function Dashboard() {
-  const [showTour, setShowTour] = useState(true);
-  const [currentStep, setCurrentStep] = useState(0);
-  const [highlightedElement, setHighlightedElement] = useState(null);
+  const navigate = useNavigate();
+  const [showTour, setShowTour] = useState(false);
+  const [showBookingPrompt, setShowBookingPrompt] = useState(false);
   const [showHelpAssistant, setShowHelpAssistant] = useState(false);
+  const [tourKey, setTourKey] = useState(0);
 
-  const tourSteps = [
-    {
-      target: '.welcome-banner',
-      content: 'Welcome to SHICo! Your personalized healthcare dashboard where managing your health is made simple and efficient.',
-      position: 'bottom'
-    },
-    {
-      target: '.quick-actions',
-      content: 'Access essential healthcare services instantly. Schedule appointments, view prescriptions, and get emergency assistance with just one click.',
-      position: 'right'
-    },
-    {
-      target: '.appointments',
-      content: 'Stay on top of your healthcare schedule. View, manage, and track all your upcoming medical appointments in one place.',
-      position: 'left'
-    },
-    {
-      target: '.health-tips',
-      content: 'Receive personalized health insights and recommendations to help you maintain a healthy lifestyle.',
-      position: 'left'
-    }
-  ];
+  useEffect(() => {
+    // Clear any existing tour state
+    localStorage.removeItem('dashboardTourCompleted');
+    // Force a new tour instance
+    setTourKey(prev => prev + 1);
+    // Show the tour
+    setShowTour(true);
+  }, []);
 
-  const helpTopics = [
-    {
-      question: "How do I schedule an appointment?",
-      answer: "Click on the 'Schedule Appointment' button in the Quick Actions section. Select your preferred doctor, date, and time slot."
-    },
-    {
-      question: "How can I view my prescriptions?",
-      answer: "Go to the Quick Actions section and click on 'View Prescriptions'. You'll see all your current and past prescriptions."
-    },
-    {
-      question: "What are health tips?",
-      answer: "Health tips are personalized recommendations based on your medical history and current health status. They help you maintain a healthy lifestyle."
-    },
-    {
-      question: "How do I update my profile?",
-      answer: "Click on your profile picture in the top right corner and select 'Edit Profile' to update your personal information."
-    }
-  ];
-
-  const scrollToElement = (selector) => {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setHighlightedElement(selector);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentStep < tourSteps.length - 1) {
-      const nextStep = currentStep + 1;
-      setCurrentStep(nextStep);
-      scrollToElement(tourSteps[nextStep].target);
-    } else {
-      setShowTour(false);
-      setHighlightedElement(null);
-    }
-  };
-
-  const handleSkip = () => {
+  const handleTourFinish = () => {
     setShowTour(false);
-    setHighlightedElement(null);
+    // Show the booking prompt modal after tour completion
+    setShowBookingPrompt(true);
+    localStorage.setItem('dashboardTourCompleted', 'true');
+  };
+
+  const handleStartBooking = () => {
+    setShowBookingPrompt(false);
+    navigate('/book-appointment');
+  };
+
+  const handleSkipBooking = () => {
+    setShowBookingPrompt(false);
   };
 
   const handleStartTour = () => {
+    // Clear any existing tour state
+    localStorage.removeItem('dashboardTourCompleted');
+    // Force a new tour instance
+    setTourKey(prev => prev + 1);
+    // Show the tour
     setShowTour(true);
-    setCurrentStep(0);
     setShowHelpAssistant(false);
-    scrollToElement(tourSteps[0].target);
   };
-
-  useEffect(() => {
-    if (showTour) {
-      scrollToElement(tourSteps[0].target);
-    }
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="px-2 sm:px-4 md:px-6 max-w-[1400px] mx-auto">
-        <div className={`welcome-banner transition-all duration-300 mt-4 mb-4 sm:mt-6 sm:mb-6 ${highlightedElement ? (highlightedElement === '.welcome-banner' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+        <div className="welcome-banner transition-all duration-300 mt-4 mb-4 sm:mt-6 sm:mb-6">
           <WelcomeBanner />
         </div>
+        
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-8">
           {/* Left Column - Quick Actions and Appointments */}
           <div className="flex flex-col gap-4 sm:gap-6">
-            <div className={`quick-actions transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full ${highlightedElement ? (highlightedElement === '.quick-actions' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+            <div className="quick-actions transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full">
               <QuickActionsCard />
             </div>
-            <div className={`appointments transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full ${highlightedElement ? (highlightedElement === '.appointments' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+            <div className="appointments transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full">
               <MyAppointmentsCard />
             </div>
           </div>
+          
           {/* Right Column - Health Tips (Full Height) */}
           <div className="h-full w-full mt-4 lg:mt-0">
-            <div className={`health-tips transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 h-full w-full ${highlightedElement ? (highlightedElement === '.health-tips' ? 'relative z-10 animate-float' : 'opacity-40') : ''}`}>
+            <div className="health-tips transition-all duration-300 bg-white rounded-xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 h-full w-full">
               <HealthTipsCard />
             </div>
           </div>
         </div>
-        {/* Tour Overlay */}
-        {showTour && (
-          <TourOverlay
-            currentStep={currentStep}
-            totalSteps={tourSteps.length}
-            content={tourSteps[currentStep].content}
-            onNext={handleNext}
-            onSkip={handleSkip}
-          />
+
+        {/* Dashboard Tour */}
+        <DashboardTour 
+          key={tourKey} 
+          run={showTour} 
+          onFinish={handleTourFinish} 
+        />
+
+        {/* Booking Prompt Modal */}
+        {showBookingPrompt && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white p-6 sm:p-8 rounded-xl max-w-md w-full mx-auto relative shadow-2xl animate-fade-in">
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-gray-800 mb-4">Ready to Book Your First Appointment?</h3>
+                <p className="text-gray-600 mb-6">
+                  Would you like to schedule your first appointment now? We'll guide you through the process step by step.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <button
+                    onClick={handleStartBooking}
+                    className="bg-green-600 text-white px-6 py-2.5 rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Yes, Book Now
+                  </button>
+                  <button
+                    onClick={handleSkipBooking}
+                    className="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg hover:bg-gray-200 transition-colors"
+                  >
+                    Maybe Later
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
+
         {/* Help Assistant */}
         {showHelpAssistant && (
           <HelpAssistant
@@ -133,6 +119,7 @@ function Dashboard() {
             onClose={() => setShowHelpAssistant(false)}
           />
         )}
+
         {/* Help Assistant Button */}
         {!showHelpAssistant && (
           <button
