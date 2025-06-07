@@ -701,9 +701,25 @@ const CompleteProfile = () => {
           </p>
         </motion.div>
 
+        {/* Mobile Progress Bar - Only visible on mobile */}
+        <div className="lg:hidden mb-6">
+          <div className="bg-white rounded-xl shadow-sm p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-gray-700">Step {currentStep} of {steps.length}</span>
+              <span className="text-sm text-green-600">{Math.round((currentStep / steps.length) * 100)}%</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${(currentStep / steps.length) * 100}%` }}
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Side Navigation */}
-          <div className="lg:w-1/4">
+          {/* Side Navigation - Hidden on mobile, visible on desktop */}
+          <div className="hidden lg:block lg:w-1/4">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-8">
               <div className="mb-6">
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -716,83 +732,97 @@ const CompleteProfile = () => {
                   Step {currentStep} of {steps.length}
                 </p>
               </div>
-        {renderStepIndicator()}
+              {renderStepIndicator()}
             </div>
           </div>
 
           {/* Main Content */}
           <div className="lg:w-3/4">
             <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <form onSubmit={handleSubmit} className="p-6 sm:p-8">
-            <AnimatePresence mode="wait">
-              {renderStep()}
-            </AnimatePresence>
+              <form onSubmit={handleSubmit} className="p-6 sm:p-8">
+                <AnimatePresence mode="wait">
+                  {renderStep()}
+                </AnimatePresence>
 
-            <div className="mt-8 flex justify-between">
-              {currentStep > 1 ? (
-                <motion.button
-                  type="button"
-                  onClick={prevStep}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                {/* Mobile Step Navigation - Only visible on mobile */}
+                <div className="lg:hidden mt-6 mb-4">
+                  <div className="flex items-center justify-between">
+                    {steps.map((step, index) => (
+                      <div
+                        key={step.id}
+                        className={`flex-1 h-1 mx-1 rounded-full ${
+                          index + 1 <= currentStep ? 'bg-green-500' : 'bg-gray-200'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-8 flex justify-between">
+                  {currentStep > 1 ? (
+                    <motion.button
+                      type="button"
+                      onClick={prevStep}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
-                >
-                  <svg className="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  Previous
-                </motion.button>
-              ) : (
-                    <div></div>
-              )}
-              
-              {currentStep < steps.length ? (
-                <motion.button
-                  type="button"
-                  onClick={nextStep}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                      className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
-                >
-                  Next
-                  <svg className="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                  </svg>
-                </motion.button>
-              ) : (
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  disabled={isSubmitting}
-                      className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    >
+                      <svg className="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
-                      Processing...
-                    </>
+                      Previous
+                    </motion.button>
                   ) : (
-                    <>
-                      Complete Profile
-                      <svg className="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </>
+                    <div></div>
                   )}
-                </motion.button>
-              )}
+                  
+                  {currentStep < steps.length ? (
+                    <motion.button
+                      type="button"
+                      onClick={nextStep}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
+                    >
+                      Next
+                      <svg className="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </motion.button>
+                  ) : (
+                    <motion.button
+                      type="submit"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      disabled={isSubmitting}
+                      className="ml-auto inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          Complete Profile
+                          <svg className="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                        </>
+                      )}
+                    </motion.button>
+                  )}
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
 
-        <div className="mt-6 text-center">
+            <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-            Your information is secure and will only be used to provide you with better healthcare services.
-          </p>
+                Your information is secure and will only be used to provide you with better healthcare services.
+              </p>
             </div>
           </div>
         </div>
