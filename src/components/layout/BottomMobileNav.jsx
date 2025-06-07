@@ -18,7 +18,7 @@ const BottomMobileNav = () => {
       label: 'Book',
     },
     {
-      path: '/records',
+      path: '/medical-results',
       icon: <FiFileText size={24} />,
       label: 'Medical Results',
     },

@@ -13,6 +13,7 @@ import PaymentPage from '../components/payment/PaymentPage';
 import Header from './layout/Header';
 import HospitalDetails from '../pages/HospitalDetailsPage';
 import BottomMobileNav from './layout/BottomMobileNav';
+import MedicalResults from '../pages/MedicalResults';
 
 const ResponsiveRouter = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -29,7 +30,8 @@ const ResponsiveRouter = () => {
     '/profile',
     '/settings',
     '/help',
-    '/hospital/:id'
+    '/hospital/:id',
+    '/medical-results'
   ];
 
   // Check if the current path matches any of the pathsWithHeader patterns
@@ -69,10 +71,11 @@ const ResponsiveRouter = () => {
         <Route path="/complete-profile" element={<CompleteProfile />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/book-appointment" element={<BookAppointmentPage />} />
-          <Route path="/book-appointment/:hospitalId" element={<AppointmentBookingForm />} />
-          <Route path="/appointment/preview" element={<AppointmentPreview />} />
-          <Route path="/appointment/payment" element={<PaymentPage />} />
+        <Route path="/book-appointment/:hospitalId" element={<AppointmentBookingForm />} />
+        <Route path="/appointment/preview" element={<AppointmentPreview />} />
+        <Route path="/appointment/payment" element={<PaymentPage />} />
         <Route path="/hospital/:id" element={<HospitalDetails />} />
+        <Route path="/medical-results" element={<MedicalResults />} />
         {/* Add other routes as needed */}
       </Routes>
       </div>
