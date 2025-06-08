@@ -14,6 +14,7 @@ import Header from './layout/Header';
 import HospitalDetails from '../pages/HospitalDetailsPage';
 import BottomMobileNav from './layout/BottomMobileNav';
 import MedicalResults from '../pages/MedicalResults';
+import Reminders from '../pages/patient/Reminders';
 
 const ResponsiveRouter = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -76,6 +77,7 @@ const ResponsiveRouter = () => {
         <Route path="/appointment/payment" element={<PaymentPage />} />
         <Route path="/hospital/:id" element={<HospitalDetails />} />
         <Route path="/medical-results" element={<MedicalResults />} />
+        <Route path="/reminders" element={<Reminders />} />
         {/* Add other routes as needed */}
       </Routes>
       </div>

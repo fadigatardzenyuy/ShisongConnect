@@ -22,8 +22,8 @@
     --color-muted-foreground: #134e4a;
 
     /* Background Colors - Light theme with mint cream base */
-    --background: #F0FDF4;
-    /* Mint cream */
+    --background: #FFFFFF;
+    /* White */
     --foreground: #14532d;
     /* Dark forest green */
 
@@ -103,11 +103,11 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    background: #FFFFFF;
   }
 
   .dark body {
-    background: linear-gradient(135deg, #14532d 0%, #065f46 100%);
+    background: #14532d;
   }
 
   h1,
