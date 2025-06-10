@@ -1,97 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Core Bleen Green Colors */
-    --color-primary: #22c55e;
-    /* Standard green */
-    --color-primary-foreground: #F0FDF4;
-    --color-secondary: #4ade80;
-    /* Bright lime green */
-    --color-secondary-foreground: #14532d;
-    --color-accent: #10b981;
-    /* Rich emerald */
-    --color-accent-foreground: #F0FDF4;
-    --color-destructive: #EF4444;
-    --color-destructive-foreground: #F0FDF4;
-    --color-muted: #2dd4bf;
-    /* Light teal */
-    --color-muted-foreground: #134e4a;
-
-    /* Background Colors - Light theme with mint cream base */
-    --background: #FFFFFF;
-    /* White */
-    --foreground: #14532d;
-    /* Dark forest green */
-
-    /* Border Colors */
-    --border: #86EFAC;
-    /* Light sage */
-    --input: #BBF7D0;
-    /* Fresh mint */
-    --ring: #10b981;
-    /* Rich emerald */
-
-    /* Card Colors */
-    --card: #FFFFFF;
-    --card-foreground: #14532d;
-
-    /* Popover Colors */
-    --popover: #FFFFFF;
-    --popover-foreground: #14532d;
-
-    /* Radius */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
-
-    /* Bleen Brand Gradients */
-    --bleen-primary-gradient: linear-gradient(135deg, #4ade80, #10b981, #0d9488);
-    --bleen-hero-gradient: linear-gradient(90deg, #4ade80, #34d399, #2dd4bf, #22c55e);
-    --bleen-overlay-primary: linear-gradient(135deg, rgba(20, 83, 45, 0.85), rgba(6, 95, 70, 0.75), rgba(19, 78, 74, 0.85));
-    --bleen-overlay-secondary: linear-gradient(135deg, rgba(0, 0, 0, 0.6), transparent, rgba(20, 83, 45, 0.3));
   }
 
   .dark {
-    /* Dark theme with deep forest base */
-    --background: #14532d;
-    /* Dark forest green */
-    --foreground: #F0FDF4;
-    /* Mint cream */
-
-    --card: #065f46;
-    /* Deep emerald shadow */
-    --card-foreground: #F0FDF4;
-
-    --popover: #065f46;
-    --popover-foreground: #F0FDF4;
-
-    --primary: #4ade80;
-    /* Bright lime green */
-    --primary-foreground: #14532d;
-
-    --secondary: #10b981;
-    /* Rich emerald */
-    --secondary-foreground: #F0FDF4;
-
-    --muted: #134e4a;
-    /* Dark teal shadow */
-    --muted-foreground: #2dd4bf;
-
-    --accent: #22c55e;
-    /* Standard green */
-    --accent-foreground: #F0FDF4;
-
-    --destructive: #EF4444;
-    --destructive-foreground: #F0FDF4;
-
-    --border: #059669;
-    /* Deep emerald */
-    --input: #134e4a;
-    /* Dark teal shadow */
-    --ring: #4ade80;
-    /* Bright lime green */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -99,253 +53,7 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    background: #FFFFFF;
-  }
-
-  .dark body {
-    background: #14532d;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-semibold text-foreground;
-  }
-
-  h1 {
-    @apply text-4xl leading-tight mb-6;
-    background: linear-gradient(90deg, #4ade80, #34d399, #2dd4bf, #22c55e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  button {
-    @apply rounded-lg px-6 py-3 text-base font-medium cursor-pointer transition-all duration-300;
-  }
-
-  button:focus,
-  button:focus-visible {
-    @apply outline-none ring-2 ring-green-400;
-  }
-}
-
-@layer components {
-
-  /* Primary Bleen CTA Buttons */
-  .btn-primary {
-    @apply text-white font-semibold shadow-lg;
-    background: linear-gradient(135deg, #22c55e, #059669, #0d9488);
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    background: linear-gradient(135deg, #16a34a, #047857, #0f766e);
-    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.5);
-    transform: translateY(-2px);
-  }
-
-  /* Secondary Glass Buttons */
-  .btn-secondary {
-    @apply text-white font-medium border-2;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(16px);
-    border-color: rgba(255, 255, 255, 0.25);
-    transition: all 0.3s ease;
-  }
-
-  .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(74, 222, 128, 0.5);
-    box-shadow: 0 8px 20px rgba(74, 222, 128, 0.25);
-  }
-
-  /* Accent Buttons */
-  .btn-accent {
-    @apply text-white font-medium;
-    background: linear-gradient(135deg, #4ade80, #10b981);
-    transition: all 0.3s ease;
-  }
-
-  .btn-accent:hover {
-    background: linear-gradient(135deg, #22c55e, #059669);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-  }
-
-  /* Emergency Button */
-  .btn-danger {
-    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-  }
-
-  /* Glass Cards */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    @apply rounded-xl p-6 transition-all duration-300;
-  }
-
-  .glass-card:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(74, 222, 128, 0.4);
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(74, 222, 128, 0.15);
-  }
-
-  /* Feature Cards Enhanced */
-  .feature-card {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), transparent, rgba(16, 185, 129, 0.1));
-    @apply backdrop-blur-xl rounded-xl p-8 border border-white/20 transition-all duration-300;
-  }
-
-  .feature-card:hover {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(255, 255, 255, 0.05), rgba(16, 185, 129, 0.15));
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px rgba(34, 197, 94, 0.2);
-  }
-
-  /* Medical Cards */
-  .medical-card {
-    @apply bg-white/90 backdrop-blur-lg rounded-xl shadow-xl border border-green-200/50 p-6 transition-all duration-300;
-  }
-
-  .medical-card:hover {
-    @apply bg-white/95 border-green-300/60;
-    box-shadow: 0 20px 40px rgba(34, 197, 94, 0.15);
-  }
-
-  /* Notification Badges */
-  .notification-badge {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(16, 185, 129, 0.2), rgba(45, 212, 191, 0.25));
-    @apply border border-green-400/40 rounded-full px-3 py-1 text-sm font-medium text-green-800 backdrop-blur-sm;
-  }
-
-  /* Medical Alerts */
-  .medical-alert {
-    @apply rounded-lg p-4 border-l-4 backdrop-blur-sm;
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(255, 255, 255, 0.05));
-    border-left-color: #22c55e;
-    color: #14532d;
-  }
-
-  .medical-alert-warning {
-    background: linear-gradient(135deg, rgba(234, 179, 8, 0.1), rgba(255, 255, 255, 0.05));
-    border-left-color: #eab308;
-    color: #ca8a04;
-  }
-
-  .medical-alert-danger {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(255, 255, 255, 0.05));
-    border-left-color: #ef4444;
-    color: #dc2626;
-  }
-
-  /* Icon Containers with Gradients */
-  .icon-green {
-    background: linear-gradient(135deg, #4ade80, #059669);
-    @apply p-3 rounded-full text-white shadow-lg;
-  }
-
-  .icon-emerald {
-    background: linear-gradient(135deg, #34d399, #0d9488);
-    @apply p-3 rounded-full text-white shadow-lg;
-  }
-
-  .icon-teal {
-    background: linear-gradient(135deg, #2dd4bf, #22c55e);
-    @apply p-3 rounded-full text-white shadow-lg;
-  }
-
-  /* Loading Screen */
-  .loading-screen {
-    background: linear-gradient(135deg, #14532d, #065f46, #134e4a);
-    @apply min-h-screen flex items-center justify-center;
-  }
-
-  .loading-spinner {
-    @apply w-12 h-12 border-4 rounded-full animate-spin;
-    border-color: rgba(74, 222, 128, 0.3);
-    border-top-color: #4ade80;
-  }
-
-  /* Stats Numbers with Gradients */
-  .stat-number-green {
-    background: linear-gradient(135deg, #4ade80, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .stat-number-emerald {
-    background: linear-gradient(135deg, #34d399, #0d9488);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .stat-number-teal {
-    background: linear-gradient(135deg, #2dd4bf, #22c55e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Brand Text Gradient */
-  .brand-text {
-    background: linear-gradient(135deg, #ffffff, #dcfce7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Floating Elements for Background */
-  .floating-particle {
-    @apply absolute rounded-full opacity-20 animate-float;
-  }
-
-  .floating-particle-green {
-    background: rgba(34, 197, 94, 0.15);
-  }
-
-  .floating-particle-emerald {
-    background: rgba(16, 185, 129, 0.2);
-  }
-
-  .floating-particle-teal {
-    background: rgba(45, 212, 191, 0.25);
-  }
-
-  /* Multi-layer Background Overlays */
-  .overlay-primary {
-    background: linear-gradient(135deg, rgba(20, 83, 45, 0.85), rgba(6, 95, 70, 0.75), rgba(19, 78, 74, 0.85));
-  }
-
-  .overlay-secondary {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), transparent, rgba(20, 83, 45, 0.3));
-  }
-
-  .overlay-tertiary {
-    background: linear-gradient(135deg, rgba(20, 83, 45, 0.4), transparent, rgba(6, 95, 70, 0.4));
-  }
-
-  /* Glow Effects */
-  .glow-green-subtle {
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.25);
-  }
-
-  .glow-green-medium {
-    box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
-  }
-
-  .glow-green-strong {
-    box-shadow: 0 0 40px rgba(34, 197, 94, 0.75);
   }
 }

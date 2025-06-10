@@ -3,8 +3,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { X, Save } from "lucide-react"
+import { X, Save, Bell } from "lucide-react"
 import { useState } from "react"
+import { Switch } from "@/components/ui/switch"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const REMINDER_TEMPLATES = {
   "daily-medication": {
@@ -44,6 +46,11 @@ const REMINDER_CATEGORIES = [
 export function ReminderForm({ showAddForm, setShowAddForm, newReminder, setNewReminder, handleAddReminder }) {
   const [isSavingTemplate, setIsSavingTemplate] = useState(false)
   const [templateName, setTemplateName] = useState("")
+  const [notificationPreferences, setNotificationPreferences] = useState({
+    sms: false,
+    whatsapp: false,
+    email: false
+  })
 
   const applyTemplate = (template) => {
     setNewReminder({
@@ -59,45 +66,12 @@ export function ReminderForm({ showAddForm, setShowAddForm, newReminder, setNewR
   }
 
   const handleSaveTemplate = () => {
-    // Here you would typically save the template to a database or local storage
-    // For now, we'll just show a success message
     setIsSavingTemplate(false)
     setTemplateName("")
   }
 
   return (
-    <div className="p-4 md:p-6">
-      <div className="flex justify-between items-center mb-4 md:mb-6">
-        <h3 className="text-lg md:text-xl font-semibold text-gray-900">Add New Reminder</h3>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setShowAddForm(false)}
-          className="text-gray-500 hover:text-gray-700"
-        >
-          <X className="h-5 w-5" />
-        </Button>
-      </div>
-
-      {/* Templates Section */}
-      <div className="mb-6">
-        <Label className="mb-2 block">Quick Templates</Label>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {Object.entries(REMINDER_TEMPLATES).map(([key, template]) => (
-            <Button
-              key={key}
-              variant="outline"
-              className="justify-start"
-              onClick={() => applyTemplate(template)}
-            >
-              {template.title}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      <div className="space-y-4 md:space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input
@@ -124,7 +98,6 @@ export function ReminderForm({ showAddForm, setShowAddForm, newReminder, setNewR
                 <SelectItem value="follow-up">Follow-up</SelectItem>
               </SelectContent>
             </Select>
-          </div>
         </div>
 
         <div className="space-y-2">
@@ -162,7 +135,6 @@ export function ReminderForm({ showAddForm, setShowAddForm, newReminder, setNewR
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="frequency">Frequency</Label>
             <Select
@@ -196,7 +168,6 @@ export function ReminderForm({ showAddForm, setShowAddForm, newReminder, setNewR
                 <SelectItem value="high">High</SelectItem>
               </SelectContent>
             </Select>
-          </div>
         </div>
 
         <div className="space-y-2">
@@ -218,61 +189,72 @@ export function ReminderForm({ showAddForm, setShowAddForm, newReminder, setNewR
           </Select>
         </div>
 
-        <div className="flex justify-between gap-3 pt-4">
-          <Button
-            variant="outline"
-            onClick={saveAsTemplate}
-            className="w-full md:w-auto"
-          >
-            <Save className="w-4 h-4 mr-2" />
-            Save as Template
-          </Button>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setShowAddForm(false)}
-              className="w-full md:w-auto"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleAddReminder}
-              className="w-full md:w-auto bg-green-600 text-white hover:bg-green-700"
-            >
-              Add Reminder
-            </Button>
+      {/* Notification Preferences Section */}
+      <div className="space-y-4 border-t pt-4">
+        <div className="flex items-center justify-between">
+          <Label className="text-base font-medium">Notification Preferences</Label>
+          <Bell className="w-5 h-5 text-gray-500" />
+        </div>
+        
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="sms-notification" className="flex items-center gap-2">
+              <Checkbox
+                id="sms-notification"
+                checked={notificationPreferences.sms}
+                onCheckedChange={(checked) => 
+                  setNotificationPreferences({ ...notificationPreferences, sms: checked })
+                }
+              />
+              SMS Notification
+            </Label>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Label htmlFor="whatsapp-notification" className="flex items-center gap-2">
+              <Checkbox
+                id="whatsapp-notification"
+                checked={notificationPreferences.whatsapp}
+                onCheckedChange={(checked) => 
+                  setNotificationPreferences({ ...notificationPreferences, whatsapp: checked })
+                }
+              />
+              WhatsApp Notification
+            </Label>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <Label htmlFor="email-notification" className="flex items-center gap-2">
+              <Checkbox
+                id="email-notification"
+                checked={notificationPreferences.email}
+                onCheckedChange={(checked) => 
+                  setNotificationPreferences({ ...notificationPreferences, email: checked })
+                }
+              />
+              Email Notification
+            </Label>
           </div>
         </div>
       </div>
 
-      {/* Save Template Dialog */}
-      {isSavingTemplate && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
-            <h3 className="text-lg font-semibold mb-4">Save as Template</h3>
-            <Input
-              placeholder="Template name"
-              value={templateName}
-              onChange={(e) => setTemplateName(e.target.value)}
-              className="mb-4"
-            />
             <div className="flex justify-end gap-2">
               <Button
                 variant="outline"
-                onClick={() => setIsSavingTemplate(false)}
+          onClick={() => setShowAddForm(false)}
+          className="flex items-center gap-2"
               >
+          <X className="w-4 h-4" />
                 Cancel
               </Button>
               <Button
-                onClick={handleSaveTemplate}
-                disabled={!templateName}
+          onClick={() => handleAddReminder({ ...newReminder, notificationPreferences })}
+          className="flex items-center gap-2"
               >
-                Save
+          <Save className="w-4 h-4" />
+          Save Reminder
               </Button>
             </div>
-          </div>
-        </div>
-      )}
     </div>
-  )
+  );
 } 

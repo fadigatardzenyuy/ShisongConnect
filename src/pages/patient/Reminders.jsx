@@ -1,10 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Input } from "@/components/ui/input"
-import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FiPlus, FiBell, FiClock, FiCalendar, FiTrash2, FiEdit2, FiCheck } from 'react-icons/fi'
+import { Button } from '../../components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
+import { Input } from "../../components/ui/input"
+import { Tooltip, TooltipTrigger, TooltipContent } from "../../components/ui/tooltip"
 import { 
   RefreshCw, 
   Plus, 
@@ -15,20 +17,27 @@ import {
   Search,
   HelpCircle,
   Filter,
-  Clock,
   Star,
-  CheckCircle2
+  CheckCircle2,
+  Phone
 } from "lucide-react"
 import { ReminderForm } from "@/components/reminders/ReminderForm"
 import { ReminderCard } from "@/components/reminders/ReminderCard"
 import { ReminderCalendar } from "@/components/reminders/ReminderCalendar"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useToast } from "@/components/ui/use-toast"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { Card } from "@/components/ui/card"
+import { Card } from "../../components/ui/card"
+import notificationService from '@/services/notificationService'
+import { Label } from "../../components/ui/label"
+import { Textarea } from '../../components/ui/textarea'
+import { Switch } from '../../components/ui/switch'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover'
+import { format, parseISO, isValid } from 'date-fns'
 
 export default function Reminders() {
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -54,6 +63,13 @@ export default function Reminders() {
   // Add new state for statistics
   const [showStats, setShowStats] = useState(false)
 
+  // Add new state for patient contact info
+  const [patientContact, setPatientContact] = useState({
+    phone: '',
+    whatsapp: '',
+    email: ''
+  });
+
   // Load reminders from localStorage on component mount
   useEffect(() => {
     const savedReminders = localStorage.getItem('medicalReminders')
@@ -66,6 +82,19 @@ export default function Reminders() {
   useEffect(() => {
     localStorage.setItem('medicalReminders', JSON.stringify(reminders))
   }, [reminders])
+
+  // Load patient contact info from localStorage
+  useEffect(() => {
+    const savedContact = localStorage.getItem('patientContact');
+    if (savedContact) {
+      setPatientContact(JSON.parse(savedContact));
+    }
+  }, []);
+
+  // Save patient contact info to localStorage
+  useEffect(() => {
+    localStorage.setItem('patientContact', JSON.stringify(patientContact));
+  }, [patientContact]);
 
   // Filter reminders based on search query and priority
   const filteredReminders = reminders.filter(reminder => {
@@ -122,16 +151,50 @@ export default function Reminders() {
     }
   }
 
-  // Add a new reminder
-  const handleAddReminder = () => {
+  // Handle adding a new reminder with notifications
+  const handleAddReminder = async (reminderData) => {
     const reminder = {
       id: Date.now(),
-      ...newReminder,
+      ...reminderData,
       status: "active",
       completed: false,
       googleCalendarEventId: null,
+    };
+
+    // Send notifications if enabled
+    if (reminderData.notificationPreferences) {
+      try {
+        const notifications = await notificationService.sendReminderNotifications(
+          reminder,
+          patientContact
+        );
+
+        // Log notification results
+        notifications.forEach(notification => {
+          if (notification.success) {
+            toast({
+              title: `${notification.type.toUpperCase()} Notification Sent`,
+              description: `Successfully sent ${notification.type} notification for the reminder.`,
+            });
+          } else {
+            toast({
+              title: `${notification.type.toUpperCase()} Notification Failed`,
+              description: `Failed to send ${notification.type} notification: ${notification.error}`,
+              variant: "destructive",
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error sending notifications:', error);
+        toast({
+          title: "Notification Error",
+          description: "Failed to send notifications. Please check your contact information.",
+          variant: "destructive",
+        });
+      }
     }
-    setReminders([...reminders, reminder])
+
+    setReminders([...reminders, reminder]);
     setNewReminder({
       title: "",
       description: "",
@@ -140,14 +203,14 @@ export default function Reminders() {
       date: "",
       frequency: "once",
       priority: "medium",
-    })
-    setShowAddForm(false)
+    });
+    setShowAddForm(false);
 
     toast({
       title: "Reminder Added",
       description: "Your reminder has been added successfully",
-    })
-  }
+    });
+  };
 
   // Toggle reminder completion
   const toggleComplete = (id) => {
@@ -211,6 +274,51 @@ export default function Reminders() {
     })
   }
 
+  // Add contact information dialog
+  const [showContactDialog, setShowContactDialog] = useState(false);
+
+  const handleUpdateContact = () => {
+    localStorage.setItem('patientContact', JSON.stringify(patientContact));
+    setShowContactDialog(false);
+    toast({
+      title: "Contact Information Updated",
+      description: "Your contact information has been saved successfully",
+    });
+  };
+
+  const [notificationPreferences, setNotificationPreferences] = useState({
+    email: true,
+    sms: false,
+    whatsapp: false,
+  });
+
+  const handleDeleteReminder = (id) => {
+    setReminders(reminders.filter(reminder => reminder.id !== id));
+    toast({
+      title: "Reminder Deleted",
+      description: "The reminder has been removed",
+    });
+  };
+
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case 'high':
+        return 'text-red-500';
+      case 'medium':
+        return 'text-yellow-500';
+      case 'low':
+        return 'text-green-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
+  const formatDate = (date) => {
+    if (!date) return '';
+    const dateObj = date instanceof Date ? date : new Date(date);
+    return isValid(dateObj) ? format(dateObj, "MMM d, yyyy") : '';
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
@@ -247,6 +355,15 @@ export default function Reminders() {
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Sync with Google Calendar</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" onClick={() => setShowContactDialog(true)} className="bg-white/80 hover:bg-white border-green-200">
+                  <Phone className="w-4 h-4 mr-2 text-blue-500" />
+                  Contact Info
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Update contact information for notifications</TooltipContent>
             </Tooltip>
           </div>
         </div>
@@ -402,13 +519,65 @@ export default function Reminders() {
                   </div>
                   <ScrollArea className="h-[600px] pr-4">
                     <div className="space-y-4">
-                      {filteredReminders.map((reminder) => (
-                        <ReminderCard
-                          key={reminder.id}
-                          reminder={reminder}
-                          toggleComplete={toggleComplete}
-                        />
-                      ))}
+                      <AnimatePresence>
+                        {filteredReminders.map((reminder) => (
+                          <motion.div
+                            key={reminder.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <Card className={`p-4 ${reminder.completed ? 'bg-gray-50' : ''}`}>
+                              <div className="flex items-start justify-between">
+                                <div className="flex items-start space-x-4">
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => toggleComplete(reminder.id)}
+                                    className={reminder.completed ? 'text-green-500' : 'text-gray-400'}
+                                  >
+                                    <FiCheck className="h-5 w-5" />
+                                  </Button>
+                                  <div>
+                                    <h3 className={`font-medium ${reminder.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                                      {reminder.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 mt-1">{reminder.description}</p>
+                                    <div className="flex items-center space-x-4 mt-2">
+                                      <span className="flex items-center text-sm text-gray-500">
+                                        <FiCalendar className="h-4 w-4 mr-1" />
+                                        {formatDate(reminder.date)}
+                                      </span>
+                                      <span className="flex items-center text-sm text-gray-500">
+                                        <FiClock className="h-4 w-4 mr-1" />
+                                        {reminder.time}
+                                      </span>
+                                      <span className={`flex items-center text-sm ${getPriorityColor(reminder.priority)}`}>
+                                        <FiBell className="h-4 w-4 mr-1" />
+                                        {reminder.priority.charAt(0).toUpperCase() + reminder.priority.slice(1)}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Button variant="ghost" size="icon">
+                                    <FiEdit2 className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() => handleDeleteReminder(reminder.id)}
+                                    className="text-red-500 hover:text-red-600"
+                                  >
+                                    <FiTrash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                            </Card>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
                     </div>
                   </ScrollArea>
                 </>
@@ -446,12 +615,99 @@ export default function Reminders() {
           <DialogHeader>
             <DialogTitle>Add New Reminder</DialogTitle>
           </DialogHeader>
-          <ReminderForm
-            reminder={newReminder}
-            setReminder={setNewReminder}
-            onSubmit={handleAddReminder}
-            onCancel={() => setShowAddForm(false)}
-          />
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                value={newReminder.title}
+                onChange={(e) => setNewReminder({ ...newReminder, title: e.target.value })}
+                placeholder="Enter reminder title"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={newReminder.description}
+                onChange={(e) => setNewReminder({ ...newReminder, description: e.target.value })}
+                placeholder="Enter reminder description"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label>Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="justify-start text-left font-normal">
+                      <FiCalendar className="mr-2 h-4 w-4" />
+                      {formatDate(newReminder.date)}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={newReminder.date}
+                      onSelect={(date) => setNewReminder({ ...newReminder, date })}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="time">Time</Label>
+                <Input
+                  id="time"
+                  type="time"
+                  value={newReminder.time}
+                  onChange={(e) => setNewReminder({ ...newReminder, time: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="repeat">Repeat</Label>
+                <Select
+                  value={newReminder.frequency}
+                  onValueChange={(value) => setNewReminder({ ...newReminder, frequency: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select repeat" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="once">Once</SelectItem>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="monthly">Monthly</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="priority">Priority</Label>
+                <Select
+                  value={newReminder.priority}
+                  onValueChange={(value) => setNewReminder({ ...newReminder, priority: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" onClick={() => setShowAddForm(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => handleAddReminder(newReminder)}>
+              Add Reminder
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
 
@@ -475,9 +731,9 @@ export default function Reminders() {
               </p>
             </div>
             <div>
-              <h3 className="font-medium mb-2">Calendar Sync</h3>
+              <h3 className="font-medium mb-2">Notifications</h3>
               <p className="text-sm text-muted-foreground">
-                Sync your reminders with Google Calendar to never miss an important appointment.
+                Set up your contact information to receive SMS and WhatsApp notifications for your reminders.
               </p>
             </div>
           </div>
@@ -543,6 +799,53 @@ export default function Reminders() {
                 </div>
               </div>
             </Card>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Contact Information Dialog */}
+      <Dialog open={showContactDialog} onOpenChange={setShowContactDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Contact Information</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone Number (SMS)</Label>
+              <Input
+                id="phone"
+                value={patientContact.phone}
+                onChange={(e) => setPatientContact({ ...patientContact, phone: e.target.value })}
+                placeholder="+1234567890"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="whatsapp">WhatsApp Number</Label>
+              <Input
+                id="whatsapp"
+                value={patientContact.whatsapp}
+                onChange={(e) => setPatientContact({ ...patientContact, whatsapp: e.target.value })}
+                placeholder="+1234567890"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                value={patientContact.email}
+                onChange={(e) => setPatientContact({ ...patientContact, email: e.target.value })}
+                placeholder="your@email.com"
+              />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowContactDialog(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleUpdateContact}>
+                Save Changes
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
