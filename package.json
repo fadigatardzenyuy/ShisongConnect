@@ -14,7 +14,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@hookform/resolvers": "^5.0.1",
+    "@hookform/resolvers": "^5.1.0",
     "@mui/icons-material": "^7.1.1",
     "@mui/material": "^7.1.1",
     "@radix-ui/react-avatar": "^1.1.10",
@@ -48,7 +48,8 @@
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
     "typewriter-effect": "^2.22.0",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "zod": "^3.25.56"
   },
   "devDependencies": {
     "@types/react": "^19.1.6",
